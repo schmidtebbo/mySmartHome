@@ -1,0 +1,60 @@
+Help-File for "mySmartHome", a GUI for pilight.
+This program depends on java, so you must have the latest jre installed.
+
+This program is in a very early state!
+
+Deutsche Hilfe nach der englischen.
+
+At launch time the program searches for the pilight deamon. If it was found, the configuration 
+will be read and the groups (rooms) added to the screen.
+At the first launch, there are only default icons and pictures available. All devices, that
+are defined in the gui section of config.json are shown on the panel of the room. You can move
+the devices by dragging the name label with the mouse.
+If you leave the program, in the directory "mySmartHome" in the users home directory all 
+propperties are stored. If this directory does not exist (at the first launch it doesn't), it
+will be created.
+If you place in this directory a jpg-picture with the name of the room, this picture is the preview 
+picture in the overview panel (120x90). If you place a jpg-picture with the name of the room and "_big.jpg" at
+the end, it is the background picture of the room panel (972x493).
+If you place a picture with the name of a device of the type "switch", "contact" or "relay", it will be shown 
+for the "on" state if it ends with "_on.jpg", or for the "off" state if it ends with "_off.jpg".
+If you have a label, it will show the text you write into or a picture, if you write the device name of the
+label and it ends with "_1.jpg" to "_9.jpg".
+A dimmer is a slider and a progress bar. With a single klick on the slider, you can switch the
+dimmer on and off (the progress bar hides, if it is off). With the slider you can vary the value. 
+All shown states of the pictures (on and off of the switches, text or picture of the label or state and value
+of the dimmer) are the real states and values, which sends the deamon back.
+
+******----------------------------------------------------------------------------------------------------******
+
+
+Kurzanleitung 
+
+Beim Start des Programms wird im Netzwerk ein pilight-daemon gesucht. 
+Wird er gefunden (ein kleiner roter Dämon wird rechts unten angezeigt), wird die Konfiguration 
+ausgelesen und im Programm angelegt. 
+Für jede Gruppe wird ein "Raum" angelegt, der in der Übersicht als kleines Icon 
+(Vorschau) erscheint.
+Beim ersten Aufruf wird dafür ein "Default-Bild" verwendet. Beim Klick auf das Bild
+oder den entsprechenden Reiter wird der "Raum" geöffnet. Hier ist das Bild als 
+Hintergrund hinterlegt. Die GUI-Elemente sind hier am linken Rand aufgeführt.
+Man kann sie verschieben, indem man das Feld mit dem GUI-Namen mit der Maus (bei gedrückter
+linker Maustaste) zum gewünschten Platz zieht.
+Beim Verlassen des Programms wird im Heim-Verzeichnis des Users ein Ordner "mySmartHome"
+angelegt, der eine Datei "myProps" enthält. Hier sind die letzten Einstellungen wie 
+Position des Programms auf dem Bildschirm oder die Lage der GUI-Elemente in den 
+Fenstern hinterlegt.
+Wenn in diesem Ordner ein jpg-Bild mit dem Namen eines Raums abgelegt wird, wird dieses 
+Bild als Bild für die Vorschau genommen. Die Größe muss 120x90 Pixel betragen.
+Wird ein Bild mit dem Raumnamen und "_big.jpg" gefunden, wird dieses Bild als Hintergrund
+für den Raum genommen. Die Größe muss hier 972x493 Pixel betragen.
+Wird in diesem Ordner ein Bild für ein "switch", "contact" oder "relay" abgelegt, wird dieses 
+angezeigt (*_on.jpg für eingeschaltet und *_off.jpg für aus).
+Wird ein Bild mit dem Namen eines "label" mit Endung "_1.jpg" bis "_9.jpg" hier abgelegt, wird 
+dies Bild angezeigt, wenn in das Objekt der Name des Bildes geschrieben wird. Ansonsten wird 
+der Text geschrieben.
+Ein Dimmer besteht aus einem Slider und einer darüber liegenden Balken-Anzeige. Mit einfachem 
+Klick auf den Slider wird der Dimmer aus und eingeschaltet. Die Anzeige wird entsprechend
+sichtbar oder unsichtbar geschaltet.
+Der Status aller switches oder Labes und Dimmer sind die wirklichen Werte, die der Dämon als Bestätigung
+an dasProgramm zurück geschickt hat.
