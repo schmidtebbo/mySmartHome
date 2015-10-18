@@ -151,7 +151,7 @@ public class myHome extends javax.swing.JFrame {
             else
                 IIDaemon = new ImageIcon(getClass().getResource("pictures/Dämon_ein.jpg"));
         }
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
