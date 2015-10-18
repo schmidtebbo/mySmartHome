@@ -38,7 +38,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jShowOverview" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jDaemon" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="jDaemon" min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jTabbedPane" max="32767" attributes="0"/>
               </Group>
@@ -51,15 +51,15 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jTabbedPane" min="-2" pref="520" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jDaemon" min="-2" pref="44" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jExit" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jShowOverview" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jDaemon" min="-2" pref="44" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

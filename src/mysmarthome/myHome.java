@@ -51,7 +51,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -130,6 +129,28 @@ public class myHome extends javax.swing.JFrame {
         initComponents();
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
+        File f = new File(myHome.gsConfigDirectory + "daemon_off.jpg");
+        if(f.exists())
+            IIDaemon_aus = new ImageIcon(myHome.gsConfigDirectory + "daemon_off.jpg");
+        else
+        {
+            f = new File(myHome.gsConfigDirectory + "daemon_off.png");
+            if(f.exists())
+                IIDaemon_aus = new ImageIcon(myHome.gsConfigDirectory + "daemon_off.png");
+            else
+                IIDaemon_aus = new ImageIcon(getClass().getResource("pictures/Dämon_aus.jpg"));
+        }
+        f = new File(myHome.gsConfigDirectory + "daemon_on.jpg");
+        if(f.exists())
+            IIDaemon = new ImageIcon(myHome.gsConfigDirectory + "daemon_on.jpg");
+        else
+        {
+            f = new File(myHome.gsConfigDirectory + "daemon_on.png");
+            if(f.exists())
+                IIDaemon = new ImageIcon(myHome.gsConfigDirectory + "daemon_on.png");
+            else
+                IIDaemon = new ImageIcon(getClass().getResource("pictures/Dämon_ein.jpg"));
+        }
     }
 
     /**
@@ -217,7 +238,7 @@ public class myHome extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jShowOverview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTabbedPane))
                 .addContainerGap())
         );
@@ -226,14 +247,14 @@ public class myHome extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jExit)
                         .addComponent(jButton1)
                         .addComponent(jButton2)
-                        .addComponent(jShowOverview)))
+                        .addComponent(jShowOverview))
+                    .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -300,9 +321,7 @@ public class myHome extends javax.swing.JFrame {
     }
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-	if(IIDaemon_aus == null)
-            IIDaemon_aus = new ImageIcon(getClass().getResource("pictures/Dämon_aus.jpg"));
-        jDaemon.setIcon(IIDaemon_aus);
+        jDaemon.setIcon(new ImageIcon(IIDaemon_aus.getImage().getScaledInstance(jDaemon.getBounds().width, jDaemon.getBounds().height, Image.SCALE_DEFAULT)));
 
         String line;
         DatagramSocket ssdp;
@@ -389,12 +408,8 @@ public class myHome extends javax.swing.JFrame {
         }while(tryAgain > 0);
                 
                 
-            if(IIDaemon == null)
-                IIDaemon = new ImageIcon(getClass().getResource("pictures/Dämon_ein.jpg"));
-            jDaemon.setIcon(IIDaemon);
+        jDaemon.setIcon(new ImageIcon(IIDaemon.getImage().getScaledInstance(jDaemon.getBounds().width, jDaemon.getBounds().height, Image.SCALE_DEFAULT)));
 
-//                String s ="pilight found on: "+server+":"+port;
-//                JOptionPane.showMessageDialog(null, s);
 // ---------- Konfiguration lesen -----------------
             socket = new Socket();
             
@@ -671,16 +686,32 @@ public class myHome extends javax.swing.JFrame {
                                     pan.setLayout(null);
                                     File f = new File(myHome.gsConfigDirectory + strR + "_big.jpg");
                                     if(f.exists())
+                                    {
                                         Room = new ImageIcon(myHome.gsConfigDirectory + strR + "_big.jpg");
+                                    }
                                     else
-                                        Room = new ImageIcon(getClass().getResource("pictures/DefaultRoom_big.jpg"));
+                                    {
+                                        f = new File(myHome.gsConfigDirectory + strR + "_big.png");
+                                        if(f.exists())
+                                            Room = new ImageIcon(myHome.gsConfigDirectory + strR + "_big.png");
+                                        else
+                                            Room = new ImageIcon(getClass().getResource("pictures/DefaultRoom_big.jpg"));
+                                    }
                                     pan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, PicWidth, PicHeigth, Room)); //set background
                                     jTabbedPane.insertTab(strR, null, pan, null, jTabbedPane.getTabCount());
                                     f = new File(myHome.gsConfigDirectory + strR + ".jpg");
                                     if(f.exists())
+                                    {
                                         Room = new ImageIcon(myHome.gsConfigDirectory + strR + ".jpg");
+                                    }
                                     else
-                                        Room = new ImageIcon(getClass().getResource("pictures/DefaultRoom.jpg"));
+                                    {
+                                        f = new File(myHome.gsConfigDirectory + strR + ".png");
+                                        if(f.exists())
+                                            Room = new ImageIcon(myHome.gsConfigDirectory + strR + ".png");
+                                        else
+                                            Room = new ImageIcon(getClass().getResource("pictures/DefaultRoom.jpg"));
+                                    }
                                     JLabel l = new JLabel(Room);
                                     Dimension preferredSize = l.getPreferredSize();
                                     Rectangle r = new Rectangle();
@@ -988,7 +1019,11 @@ public class myHome extends javax.swing.JFrame {
                                                 }
                                                 else
                                                 {
-                                                    d.setIconOn(new ImageIcon(getClass().getResource("pictures/lamp_on.jpg")));
+                                                    f = new File(myHome.gsConfigDirectory + d.getName() + "_on.png");
+                                                    if(f.exists())
+                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.png"));
+                                                    else
+                                                        d.setIconOn(new ImageIcon(getClass().getResource("pictures/lamp_on.jpg")));
                                                 }
                                                 f = new File(myHome.gsConfigDirectory + d.getName() + "_off.jpg");
                                                 if(f.exists())
@@ -998,7 +1033,11 @@ public class myHome extends javax.swing.JFrame {
                                                 }
                                                 else
                                                 {
-                                                    d.setIconOff(new ImageIcon(getClass().getResource("pictures/lamp_off.jpg")));
+                                                    f = new File(myHome.gsConfigDirectory + d.getName() + "_off.png");
+                                                    if(f.exists())
+                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
+                                                    else
+                                                        d.setIconOff(new ImageIcon(getClass().getResource("pictures/lamp_off.jpg")));
                                                 }
                                             case 6:         //contact
                                                 if(d.getType() == 6) 
@@ -1011,6 +1050,10 @@ public class myHome extends javax.swing.JFrame {
                                                     }
                                                     else
                                                     {
+                                                    f = new File(myHome.gsConfigDirectory + d.getName() + "_on.png");
+                                                    if(f.exists())
+                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.png"));
+                                                    else
                                                         d.setIconOn(new ImageIcon(getClass().getResource("pictures/contact_on.jpg")));
                                                     }
                                                     f = new File(myHome.gsConfigDirectory + d.getName() + "_off.jpg");
@@ -1021,6 +1064,10 @@ public class myHome extends javax.swing.JFrame {
                                                     }
                                                     else
                                                     {
+                                                    f = new File(myHome.gsConfigDirectory + d.getName() + "_off.png");
+                                                    if(f.exists())
+                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
+                                                    else
                                                         d.setIconOff(new ImageIcon(getClass().getResource("pictures/contact_off.jpg")));
                                                     }
                                                 }
@@ -1722,11 +1769,22 @@ public class myHome extends javax.swing.JFrame {
                                                     }
                                                     else
                                                     {
-                                                        tf.setText(" " + dev.getLabel() + " ");
-                                                        tf.setOpaque(true);
-                                                        tf.setForeground(convertColorString(dev.getLabelColor()));
-                                                        tf.setIcon(null);
-                                                        tf.setBounds(tf.getBounds().x, tf.getBounds().y, tf.getPreferredSize().width, tf.getPreferredSize().height);
+                                                        f = new File(myHome.gsConfigDirectory + dev.getLabel() + ".png");
+                                                        if(f.exists())
+                                                        {
+                                                            Room = new ImageIcon(myHome.gsConfigDirectory + dev.getLabel() + ".png");
+                                                            tf.setIcon(Room);
+                                                            tf.setText("");
+                                                            tf.setBounds(tf.getBounds().x, tf.getBounds().y, tf.getPreferredSize().width, tf.getPreferredSize().height);
+                                                        }
+                                                        else
+                                                        {
+                                                            tf.setText(" " + dev.getLabel() + " ");
+                                                            tf.setOpaque(true);
+                                                            tf.setForeground(convertColorString(dev.getLabelColor()));
+                                                            tf.setIcon(null);
+                                                            tf.setBounds(tf.getBounds().x, tf.getBounds().y, tf.getPreferredSize().width, tf.getPreferredSize().height);
+                                                        }
                                                     }
                                                 }
                                                break;
