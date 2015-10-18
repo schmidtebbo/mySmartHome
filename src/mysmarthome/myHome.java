@@ -1797,7 +1797,7 @@ public class myHome extends javax.swing.JFrame {
         }
         else
         {
-            if(!bMustNotDeleteAgain) jTabbedPane.remove(0);
+            if(!bMustNotDeleteAgain) jTabbedPane.remove(0); 
             bMustShow = false;
             bMustNotDeleteAgain = true;
         }
