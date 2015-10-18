@@ -58,3 +58,26 @@ Klick auf den Slider wird der Dimmer aus und eingeschaltet. Die Anzeige wird ent
 sichtbar oder unsichtbar geschaltet.
 Der Status aller switches oder Labes und Dimmer sind die wirklichen Werte, die der Dämon als Bestätigung
 an dasProgramm zurück geschickt hat.
+
+******----------------------------------------------------------------------------------------------------******
+
+
+Ten program jest w bardzo wczesnym stanie!
+
+W momencie uruchomienia programu wyszukuje on demona pilight. Jeżeli demon zostanie znaleziony, konfiguracja
+zostanie odczytana, a grupy (pokoje)zostaną dodane do ekranu.
+Przy pierwszym uruchomieniu, wyświetlane są  domyślne ikony i obrazy. Wszystkie urządzenia, które
+są dodane w GUI w pliku config.json będą wyświetlane. Można przemieszczać
+urządzenia, przeciągając myszką etykietę.
+Ustawienia programu są przechowywane w katalogu domowym użytkownika /"mySmartHome". 
+Jeśli ten katalog nie istnieje, zostanie utworzony przy pierwszym uruchomieniu.
+Jeśli umieścisz w tym katalogu plik jpg z nazwą pokoju, będzie on widoczny w panelu Overwiev. Wymiary (120x90). 
+Jeśli umieścisz plik jpg z nazwą pokoju z końcówką "_big.jpg" będzie on tłem dla twojego pokoju. Wymiary (972x493).
+Jeśli umieścisz plik jpg z nazwą urządzenia typu "przełącznik", "kontakt" lub "relay", z końcówką _on lub _off będzie on wyświetlany jako twoje urządzenie.
+Jeśli masz etykietę, to pokaże napisać tekst lub obraz do Jeśli wpisać nazwę urządzenia z
+etykiety i kończy się "_1.jpg" do "_9.jpg".
+Jest ściemniacza suwak oraz pasek postępu. Z jednej kliknij na suwak, można przełączyć
+ściemniacz i wyłączanie (pasek postępu ukrywa, jeśli jest wyłączona). Za pomocą suwaka można zmieniać wartość.
+Wszystkie pokazane stany zdjęć (i wyłączanie przełączników, tekst lub obraz na etykiecie lub stanu i wartości
+ściemniacza) są rzeczywiste stany i wartości, które wysyła demona z powrotem.
+*** ----------------------------------------------- ------------------------------- ***
