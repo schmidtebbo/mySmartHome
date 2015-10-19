@@ -230,11 +230,11 @@ public class myHome extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jExit, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jExit, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jShowOverview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1035,7 +1035,7 @@ public class myHome extends javax.swing.JFrame {
                                                 {
                                                     f = new File(myHome.gsConfigDirectory + d.getName() + "_off.png");
                                                     if(f.exists())
-                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
+                                                        d.setIconOff(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
                                                     else
                                                         d.setIconOff(new ImageIcon(getClass().getResource("pictures/lamp_off.jpg")));
                                                 }
@@ -1064,11 +1064,11 @@ public class myHome extends javax.swing.JFrame {
                                                     }
                                                     else
                                                     {
-                                                    f = new File(myHome.gsConfigDirectory + d.getName() + "_off.png");
-                                                    if(f.exists())
-                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
-                                                    else
-                                                        d.setIconOff(new ImageIcon(getClass().getResource("pictures/contact_off.jpg")));
+                                                        f = new File(myHome.gsConfigDirectory + d.getName() + "_off.png");
+                                                        if(f.exists())
+                                                            d.setIconOff(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
+                                                        else
+                                                            d.setIconOff(new ImageIcon(getClass().getResource("pictures/contact_off.jpg")));
                                                     }
                                                 }
                                                 if(d.getState() == 0)
