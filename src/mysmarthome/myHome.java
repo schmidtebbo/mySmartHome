@@ -169,6 +169,7 @@ public class myHome extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jShowOverview = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -222,6 +223,8 @@ public class myHome extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText(bundle.getString("myHome.jLabel1.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,6 +241,8 @@ public class myHome extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jShowOverview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
                         .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTabbedPane))
                 .addContainerGap())
@@ -253,7 +258,8 @@ public class myHome extends javax.swing.JFrame {
                         .addComponent(jExit)
                         .addComponent(jButton1)
                         .addComponent(jButton2)
-                        .addComponent(jShowOverview))
+                        .addComponent(jShowOverview)
+                        .addComponent(jLabel1))
                     .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -1925,6 +1931,7 @@ public class myHome extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jDaemon;
     private javax.swing.JButton jExit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jOverview;
     private javax.swing.JCheckBox jShowOverview;
     private javax.swing.JTabbedPane jTabbedPane;
