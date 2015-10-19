@@ -632,6 +632,8 @@ public class myHome extends javax.swing.JFrame {
                         "temperature":{"type":3,"order":4,"name":"Temperature Sensor","group":["Misc"],"media":["all"],"show-humidity":1,"show-temperature":1,"humidity-decimals":1,"temperature-decimals":1},"outside":{"type":3,"order":5,"name":"Temperature","group":["Misc"],"media":["all"],"show-update":1,"show-sunriseset":1,"show-temperature":1,"show-humidity":1,"sunriseset-decimals":2,"humidity-decimals":2,"temperature-decimals":2},
                         "zeit":{"type":8,"order":6,"name":"Date & Time","group":["Misc"],"media":["all"],"format":"HH:mm:ss YYYY-MM-DD","show-datetime":0                        
 */                       
+                        if(s_arr[1].contains("\"rules\":{},"))
+                            s_arr[2] = s_arr[1].substring(11, s_arr[1].length());
                         if(s_arr[2].length() > "\"gui\":{},".length())
                         {
                             s = s_arr[2].substring(8, s_arr[2].length());
@@ -1684,19 +1686,19 @@ public class myHome extends javax.swing.JFrame {
                                                     dev.setTemperature(str.substring(0,nLauf));
                                                     bn = (JButton)dev.getAction().get(1);
                                                     if(bn != null)
-                                                        bn.setText(dev.getTemperature());
+                                                        bn.setText(dev.getTemperature() + "°C");
                                                 }
                                                 if(strMeldungen.contains("\"pressure\":"))
                                                 {
                                                     nLauf = strMeldungen.indexOf("\"pressure\":");
-                                                    String str = strMeldungen.substring(nLauf + 10, strMeldungen.length());
+                                                    String str = strMeldungen.substring(nLauf + 11, strMeldungen.length());
                                                     nLauf = str.indexOf(",\"");
                                                     if(nLauf == -1)
                                                         nLauf = str.indexOf("}");
-                                                    dev.setSunrise(str.substring(0,nLauf));
+                                                    dev.setAirPressure(str.substring(0,nLauf));
                                                     bn = (JButton)dev.getAction().get(2);
                                                     if(bn != null)
-                                                        bn.setText(dev.getSunrise());
+                                                        bn.setText(dev.getAirPressure() + "hPa");
                                                 }
                                                 if(strMeldungen.contains("\"sunrise\":"))
                                                 {
