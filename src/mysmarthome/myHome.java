@@ -33,6 +33,7 @@ import java.net.NetworkInterface;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -1031,7 +1032,15 @@ public class myHome extends javax.swing.JFrame {
                                                     if(f.exists())
                                                         d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.png"));
                                                     else
-                                                        d.setIconOn(new ImageIcon(getClass().getResource("pictures/lamp_on.jpg")));
+                                                    {
+                                                        f = new File(myHome.gsConfigDirectory + d.getName() + "_on.gif");
+                                                        if(f.exists())
+                                                        {
+                                                            d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.gif"));
+                                                        }
+                                                        else
+                                                            d.setIconOn(new ImageIcon(getClass().getResource("pictures/lamp_on.jpg")));
+                                                    }
                                                 }
                                                 f = new File(myHome.gsConfigDirectory + d.getName() + "_off.jpg");
                                                 if(f.exists())
@@ -1045,7 +1054,15 @@ public class myHome extends javax.swing.JFrame {
                                                     if(f.exists())
                                                         d.setIconOff(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
                                                     else
-                                                        d.setIconOff(new ImageIcon(getClass().getResource("pictures/lamp_off.jpg")));
+                                                    {
+                                                        f = new File(myHome.gsConfigDirectory + d.getName() + "_off.gif");
+                                                        if(f.exists())
+                                                        {
+                                                            d.setIconOff(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.gif"));
+                                                        }
+                                                        else
+                                                            d.setIconOff(new ImageIcon(getClass().getResource("pictures/lamp_off.jpg")));
+                                                    }
                                                 }
                                             case 6:         //contact
                                                 if(d.getType() == 6) 
@@ -1058,11 +1075,19 @@ public class myHome extends javax.swing.JFrame {
                                                     }
                                                     else
                                                     {
-                                                    f = new File(myHome.gsConfigDirectory + d.getName() + "_on.png");
-                                                    if(f.exists())
-                                                        d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.png"));
-                                                    else
-                                                        d.setIconOn(new ImageIcon(getClass().getResource("pictures/contact_on.jpg")));
+                                                        f = new File(myHome.gsConfigDirectory + d.getName() + "_on.png");
+                                                        if(f.exists())
+                                                            d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.png"));
+                                                        else
+                                                        {
+                                                            f = new File(myHome.gsConfigDirectory + d.getName() + "_on.gif");
+                                                            if(f.exists())
+                                                            {
+                                                                d.setIconOn(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_on.gif"));
+                                                            }
+                                                            else
+                                                                d.setIconOn(new ImageIcon(getClass().getResource("pictures/contact_on.jpg")));
+                                                        }
                                                     }
                                                     f = new File(myHome.gsConfigDirectory + d.getName() + "_off.jpg");
                                                     if(f.exists())
@@ -1076,7 +1101,15 @@ public class myHome extends javax.swing.JFrame {
                                                         if(f.exists())
                                                             d.setIconOff(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.png"));
                                                         else
-                                                            d.setIconOff(new ImageIcon(getClass().getResource("pictures/contact_off.jpg")));
+                                                        {
+                                                            f = new File(myHome.gsConfigDirectory + d.getName() + "_off.gif");
+                                                            if(f.exists())
+                                                            {
+                                                                d.setIconOff(new ImageIcon(myHome.gsConfigDirectory + d.getName() + "_off.gif"));
+                                                            }
+                                                            else
+                                                                d.setIconOff(new ImageIcon(getClass().getResource("pictures/contact_off.jpg")));
+                                                        }
                                                     }
                                                 }
                                                 if(d.getState() == 0)
@@ -1459,9 +1492,23 @@ public class myHome extends javax.swing.JFrame {
                                                 }
                                                 else
                                                 {
-                                                    tf1.setText(" " + d.getLabel() + " ");
-                                                    tf1.setForeground(convertColorString(d.getLabelColor()));
-                                                    tf1.setOpaque(true);
+                                                    f = new File(myHome.gsConfigDirectory + d.getLabel() + ".png");
+                                                    if(f.exists())
+                                                        tf1.setIcon(new ImageIcon(myHome.gsConfigDirectory + d.getLabel() + ".png"));
+                                                    else
+                                                    {
+                                                        f = new File(myHome.gsConfigDirectory + d.getLabel() + ".gif");
+                                                        if(f.exists())
+                                                        {
+                                                            tf1.setIcon(new ImageIcon(myHome.gsConfigDirectory + d.getLabel() + ".gif"));
+                                                        }
+                                                        else
+                                                        {
+                                                            tf1.setText(" " + d.getLabel() + " ");
+                                                            tf1.setForeground(convertColorString(d.getLabelColor()));
+                                                            tf1.setOpaque(true);
+                                                        }
+                                                    }
                                                 }
                                                 r = tf.getBounds();
                                                 tfDim = tf.getPreferredSize();
