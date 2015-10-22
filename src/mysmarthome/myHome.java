@@ -761,7 +761,7 @@ public class myHome extends javax.swing.JFrame {
                                     JLabel ll = new JLabel(strR);
                                     preferredSize = ll.getPreferredSize();
                                     r.x = (n%7)*(r.width + 10) + 15;
-                                    r.y = (n/7 + 1)*(r.height + 10) + 5;
+                                    r.y = l.getBounds().y + r.height + 5;
                                     r.height = preferredSize.height;
                                     r.width = preferredSize.width;
                                     ll.setBounds(r);
