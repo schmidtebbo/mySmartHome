@@ -8,7 +8,6 @@ package mysmarthome;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 
 /**

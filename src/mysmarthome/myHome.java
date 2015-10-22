@@ -672,6 +672,37 @@ public class myHome extends javax.swing.JFrame {
                                         nLauf = str.indexOf("\"]");
                                         str = str.substring(0,nLauf);
                                         dev.setMedia(str);
+                                        if(strArr[n].contains("show-humidity"))
+                                        {
+                                            nLauf = strArr[n].indexOf("show-humidity");
+                                            str = strArr[n].substring(nLauf + 12, strArr[n].length());
+                                            if(str.substring(0, 5).contains("0"))
+                                                dev.setHumidity(null);
+                                        }
+                                        if(strArr[n].contains("show-temperature"))
+                                        {
+                                            nLauf = strArr[n].indexOf("show-temperature");
+                                            str = strArr[n].substring(nLauf + 15, strArr[n].length());
+                                            if(str.substring(0, 5).contains("0"))
+                                                dev.setTemperature(null);
+                                        }
+                                        if(strArr[n].contains("show-pressure"))
+                                        {
+                                            nLauf = strArr[n].indexOf("show-pressure");
+                                            str = strArr[n].substring(nLauf + 12, strArr[n].length());
+                                            if(str.substring(0, 5).contains("0"))
+                                                dev.setTemperature(null);
+                                        }
+                                        if(strArr[n].contains("show-sunriseset"))
+                                        {
+                                            nLauf = strArr[n].indexOf("show-sunriseset");
+                                            str = strArr[n].substring(nLauf + 14, strArr[n].length());
+                                            if(str.substring(0, 5).contains("0"))
+                                            {
+                                                dev.setSunrise(null);
+                                                dev.setSunset(null);
+                                            }
+                                        }
                                     }
                                 }
                             }
