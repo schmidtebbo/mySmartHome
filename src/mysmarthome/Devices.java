@@ -6,7 +6,14 @@
 package mysmarthome;
 
 import java.awt.Component;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
@@ -16,6 +23,8 @@ import javax.swing.JComponent;
  */
 class Devices {
 
+    static String  gsConfigDirectory = System.getProperty("user.home") + "/mySmartHome/";
+
     private String strName = null;
     private String strProtokoll = null;
     private String strGUIName = null;
@@ -23,6 +32,12 @@ class Devices {
     private String strMedia = null;
     private String strUUID = null;
     
+    public int nHumidity[] = new int[100];
+    public byte nTemperature[] = new byte[100];
+    private byte maxTemp = -127;
+    public int nAirPressure[] = new int[100];
+    private int nDay = 0;
+
     private String strHumidity = null;
     private String strTemperature = null;
     private String strAirPressure = null;
@@ -62,6 +77,49 @@ class Devices {
     
     Devices(String ss) {
         this.strName = ss;
+        try {
+            FileInputStream stream = new FileInputStream(myHome.gsConfigDirectory + strName + ".temp");
+            for(int i = 0; i < 100; i++)
+            {
+                stream.read(nTemperature);
+            }
+        } catch (FileNotFoundException ex) {
+            File f = new File(myHome.gsConfigDirectory + strName + ".temp");
+            try {
+                f.createNewFile();
+                FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
+                for(int i = 0; i < 100; i++)
+                {
+                    stream.write(0);
+                }
+               
+            } catch (IOException ex1) {
+                Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addTemp(byte newTemp)
+    {
+        try {
+            FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
+            for(int i = 0; i < 99; i++)
+            {
+                nTemperature[i] = nTemperature[i+1];
+                stream.write(nTemperature[i]);
+            }
+            nTemperature[99] = newTemp;
+            stream.write(nTemperature[99]);
+        } catch (FileNotFoundException ex) {
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //save...
+//        File f = new File(myHome.gsConfigDirectory + strName + ".temp");
+
     }
     
     public String getName()
@@ -107,6 +165,10 @@ class Devices {
     public void setTemperature(String h)
     {
         strTemperature = h;
+        int i = strTemperature.indexOf('.');
+        i = Integer.parseInt(strTemperature.substring(0, i));
+        if(i > maxTemp)
+            maxTemp = (byte)i;
     }
     
     public String getAirPressure()
@@ -418,6 +480,15 @@ class Devices {
 
     JComponent getSingleAction() {
         return Button;
+    }
+
+    void setnday(int Day) {
+        nDay = Day;
+        maxTemp = -127;
+    }
+
+    int get(int nDay) {
+        return nDay;
     }
 
 }

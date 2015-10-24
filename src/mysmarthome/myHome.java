@@ -33,11 +33,12 @@ import java.net.NetworkInterface;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -52,6 +53,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 /**
  *
@@ -72,6 +74,9 @@ public class myHome extends javax.swing.JFrame {
     Image img = null;
     ArrayList myDevices = new ArrayList();      //all Devices
     private boolean bMustNotDeleteAgain = false;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+    int nDay = 0;
+    boolean bMustUpdate = false;
 
     private Color convertColorString(String labelColor) {
         switch(labelColor)
@@ -197,7 +202,7 @@ public class myHome extends javax.swing.JFrame {
         );
         jOverviewLayout.setVerticalGroup(
             jOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 493, Short.MAX_VALUE)
+            .addGap(0, 487, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab(bundle.getString("myHome.jOverview.TabConstraints.tabTitle"), jOverview); // NOI18N
@@ -251,17 +256,17 @@ public class myHome extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addContainerGap()
+                .addComponent(jTabbedPane)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jExit)
                         .addComponent(jButton1)
                         .addComponent(jButton2)
                         .addComponent(jShowOverview)
                         .addComponent(jLabel1))
-                    .addComponent(jDaemon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDaemon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -418,7 +423,7 @@ public class myHome extends javax.swing.JFrame {
         jDaemon.setIcon(new ImageIcon(IIDaemon.getImage().getScaledInstance(jDaemon.getBounds().width, jDaemon.getBounds().height, Image.SCALE_DEFAULT)));
 
 // ---------- Konfiguration lesen -----------------
-            socket = new Socket();
+        socket = new Socket();
             
         try {
             socket.connect(new InetSocketAddress(server, port), 1000);
@@ -675,29 +680,29 @@ public class myHome extends javax.swing.JFrame {
                                         if(strArr[n].contains("show-humidity"))
                                         {
                                             nLauf = strArr[n].indexOf("show-humidity");
-                                            str = strArr[n].substring(nLauf + 12, strArr[n].length());
-                                            if(str.substring(0, 5).contains("0"))
+                                            str = strArr[n].substring(nLauf + 13, strArr[n].length());
+                                            if(str.substring(0, 3).contains("0"))
                                                 dev.setHumidity(null);
                                         }
                                         if(strArr[n].contains("show-temperature"))
                                         {
                                             nLauf = strArr[n].indexOf("show-temperature");
-                                            str = strArr[n].substring(nLauf + 15, strArr[n].length());
-                                            if(str.substring(0, 5).contains("0"))
+                                            str = strArr[n].substring(nLauf + 16, strArr[n].length());
+                                            if(str.substring(0, 3).contains("0"))
                                                 dev.setTemperature(null);
                                         }
                                         if(strArr[n].contains("show-pressure"))
                                         {
                                             nLauf = strArr[n].indexOf("show-pressure");
-                                            str = strArr[n].substring(nLauf + 12, strArr[n].length());
-                                            if(str.substring(0, 5).contains("0"))
+                                            str = strArr[n].substring(nLauf + 13, strArr[n].length());
+                                            if(str.substring(0, 3).contains("0"))
                                                 dev.setTemperature(null);
                                         }
                                         if(strArr[n].contains("show-sunriseset"))
                                         {
                                             nLauf = strArr[n].indexOf("show-sunriseset");
-                                            str = strArr[n].substring(nLauf + 14, strArr[n].length());
-                                            if(str.substring(0, 5).contains("0"))
+                                            str = strArr[n].substring(nLauf + 15, strArr[n].length());
+                                            if(str.substring(0, 3).contains("0"))
                                             {
                                                 dev.setSunrise(null);
                                                 dev.setSunset(null);
@@ -857,6 +862,15 @@ public class myHome extends javax.swing.JFrame {
                                                 {
                                                     bnTemp.setIcon(d.getIconTemperature());
                                                     bnTemp.setText(d.getTemperature() + "°C");
+                                                    bnTemp.addActionListener(new java.awt.event.ActionListener() {
+
+                                                        @Override
+                                                        public void actionPerformed(ActionEvent e) {
+                                                            Statistik statistik = new Statistik();
+                                                            statistik.iVal = d.nTemperature;
+                                                            statistik.setVisible(true);
+                                                        }
+                                                    });
                                                 }
                                                 if(d.getAirPressure() != null)
                                                 {
@@ -1662,6 +1676,19 @@ public class myHome extends javax.swing.JFrame {
                 Logger.getLogger(myHome.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            Timer timer = new Timer(60000, new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // this is a minute timer
+                    Date date = new Date();
+                    String format = sdf.format(date);
+                    nDay = format.indexOf('.');
+                    nDay = Integer.parseInt(format.substring(0, nDay));
+                }
+            });
+            timer.start();
+            
             Thread pilightCore = new Thread()
             {
                 String strMeldungen = null;
@@ -1684,6 +1711,7 @@ public class myHome extends javax.swing.JFrame {
                                }
                                strMeldungen = response.toString() + '\n';
                                response.delete(0, 1025);
+                               boolean bDev = false;
                                for (Object myDevice : myDevices) {
                                    Devices dev = (Devices) myDevice;
                                    if(strMeldungen.contains("\"" + dev.getName() + "\""))
@@ -1694,6 +1722,9 @@ public class myHome extends javax.swing.JFrame {
                                            case 1:
                                            case 4:
                                            case 6:
+                                               if(bDev)
+                                                   break;
+                                               bDev = true;
                                                 nLauf = strMeldungen.indexOf("state");
                                                 if(nLauf > 0)
                                                 {
@@ -1714,6 +1745,9 @@ public class myHome extends javax.swing.JFrame {
                                                break;
                                                
                                            case 2:
+                                               if(bDev)
+                                                   break;
+                                               bDev = true;
                                                nLauf = strMeldungen.indexOf("state");
                                                s = strMeldungen.substring(nLauf + 6, strMeldungen.length());
                                                JProgressBar pb = (JProgressBar) dev.getAction().get(1);
@@ -1741,6 +1775,9 @@ public class myHome extends javax.swing.JFrame {
                                                break;
                                                
                                            case 3:
+                                               if(bDev)
+                                                   break;
+                                               bDev = true;
                                                 JButton bn;
                                                 if(strMeldungen.contains("\"humidity\":"))
                                                 {
@@ -1764,7 +1801,17 @@ public class myHome extends javax.swing.JFrame {
                                                     dev.setTemperature(str.substring(0,nLauf));
                                                     bn = (JButton)dev.getAction().get(1);
                                                     if(bn != null)
+                                                    {
                                                         bn.setText(dev.getTemperature() + "°C");
+                                                        if(nDay != dev.get(nDay))
+                                                        {
+                                                            String st = dev.getTemperature();
+                                                            int indexOf = st.indexOf(".");
+                                                            int n = Integer.parseInt(st.substring(0, indexOf));
+                                                            dev.addTemp((byte) n);
+                                                            dev.setnday(nDay);
+                                                        }
+                                                    }
                                                 }
                                                 if(strMeldungen.contains("\"pressure\":"))
                                                 {
@@ -1805,6 +1852,9 @@ public class myHome extends javax.swing.JFrame {
                                                break;
                                                
                                            case 8:
+                                               if(bDev)
+                                                   break;
+                                               bDev = true;
 //{"origin":"update","type":8,"devices":["zeit"],"values":{"timestamp":1444751962,"year":2015,"month":10,"day":13,"hour":16,"minute":59,"second":22,"weekday":3,"dst":0}}   
                                                nLauf = strMeldungen.indexOf("year");
                                                s = strMeldungen.substring(nLauf + 6, strMeldungen.length());
@@ -1836,6 +1886,9 @@ public class myHome extends javax.swing.JFrame {
                                                break;
                                                
                                            case 15:
+                                               if(bDev)
+                                                   break;
+                                               bDev = true;
                                                 nLauf = strMeldungen.indexOf("label");
                                                 if(nLauf > 0)
                                                 {
