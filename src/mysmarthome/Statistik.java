@@ -6,6 +6,7 @@
 package mysmarthome;
 
 import java.awt.Graphics;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -18,6 +19,8 @@ public class Statistik extends javax.swing.JFrame {
      * Creates new form Statistik
      */
     public Statistik() {
+        ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
+        this.setIconImage(II.getImage());
         initComponents();
         this.setResizable(false);
         this.setBounds(50, 50, this.getBounds().width, this.getBounds().height);

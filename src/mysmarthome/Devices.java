@@ -84,18 +84,6 @@ class Devices {
                 stream.read(nTemperature);
             }
         } catch (FileNotFoundException ex) {
-            File f = new File(myHome.gsConfigDirectory + strName + ".temp");
-            try {
-                f.createNewFile();
-                FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
-                for(int i = 0; i < 100; i++)
-                {
-                    stream.write(0);
-                }
-               
-            } catch (IOException ex1) {
-                Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
-            }
         } catch (IOException ex) {
             Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -113,13 +101,20 @@ class Devices {
             nTemperature[99] = newTemp;
             stream.write(nTemperature[99]);
         } catch (FileNotFoundException ex) {
-            
+            File f = new File(myHome.gsConfigDirectory + strName + ".temp");
+            try {
+                f.createNewFile();
+                FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
+                for(int i = 0; i < 100; i++)
+                {
+                    stream.write(0);
+                }
+            } catch (IOException ex1) {
+                Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } catch (IOException ex) {
             Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //save...
-//        File f = new File(myHome.gsConfigDirectory + strName + ".temp");
-
     }
     
     public String getName()
@@ -164,11 +159,14 @@ class Devices {
     
     public void setTemperature(String h)
     {
-        strTemperature = h;
-        int i = strTemperature.indexOf('.');
-        i = Integer.parseInt(strTemperature.substring(0, i));
-        if(i > maxTemp)
-            maxTemp = (byte)i;
+        if(h != null)
+        {
+            strTemperature = h;
+            int i = strTemperature.indexOf('.');
+            i = Integer.parseInt(strTemperature.substring(0, i));
+            if(i > maxTemp)
+                maxTemp = (byte)i;
+        }
     }
     
     public String getAirPressure()

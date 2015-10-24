@@ -577,7 +577,7 @@ public class myHome extends javax.swing.JFrame {
                                 {
                                     nLauf = s.indexOf("\"temperature\":");
                                     String str = s.substring(nLauf + 14, s.length());
-                                    nLauf = str.indexOf(",\"");
+                                    nLauf = str.indexOf(".") + 2;
                                     dev.setTemperature(str.substring(0,nLauf));
                                 }
                                 if(s.contains("\"pressure\":"))
@@ -1795,7 +1795,7 @@ public class myHome extends javax.swing.JFrame {
                                                 {
                                                     nLauf = strMeldungen.indexOf("\"temperature\":");
                                                     String str = strMeldungen.substring(nLauf + 14, strMeldungen.length());
-                                                    nLauf = str.indexOf(",\"");
+                                                    nLauf = str.indexOf(".") + 2;
                                                     if(nLauf == -1)
                                                         nLauf = str.indexOf("}");
                                                     dev.setTemperature(str.substring(0,nLauf));
