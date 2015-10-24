@@ -159,9 +159,9 @@ class Devices {
     
     public void setTemperature(String h)
     {
+        strTemperature = h;
         if(h != null)
         {
-            strTemperature = h;
             int i = strTemperature.indexOf('.');
             i = Integer.parseInt(strTemperature.substring(0, i));
             if(i > maxTemp)
