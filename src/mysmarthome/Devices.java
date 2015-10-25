@@ -35,6 +35,7 @@ class Devices {
     public int nHumidity[] = new int[100];
     public byte nTemperature[] = new byte[100];
     private byte maxTemp = -127;
+    private float TempOffset = 0;
     public int nAirPressure[] = new int[100];
     private int nDay = 0;
 
@@ -162,6 +163,9 @@ class Devices {
         strTemperature = h;
         if(h != null)
         {
+            float f = Float.parseFloat(h);
+            f += TempOffset;
+            strTemperature.valueOf(f);
             int i = strTemperature.indexOf('.');
             i = Integer.parseInt(strTemperature.substring(0, i));
             if(i > maxTemp)
@@ -487,6 +491,17 @@ class Devices {
 
     int get(int nDay) {
         return nDay;
+    }
+
+    void setTempOffset(String offset) {
+        try {
+            TempOffset = Float.parseFloat(offset);
+            float f = Float.parseFloat(strTemperature);
+            f += TempOffset;
+            strTemperature = strTemperature.valueOf(f);
+        } catch (NumberFormatException numberFormatException) {
+            TempOffset = 0;
+        }
     }
 
 }

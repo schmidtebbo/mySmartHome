@@ -579,6 +579,15 @@ public class myHome extends javax.swing.JFrame {
                                     String str = s.substring(nLauf + 14, s.length());
                                     nLauf = str.indexOf(".") + 2;
                                     dev.setTemperature(str.substring(0,nLauf));
+                                    if(s.contains("\"temperature-offset\":"))
+                                    {
+                                        nLauf = s.indexOf("\"temperature-offset\":");
+                                        str = s.substring(nLauf + 21, s.length());
+                                        nLauf = str.indexOf(".") + 2;
+                                        if(nLauf == 0)
+                                            nLauf++;
+                                        dev.setTempOffset(str.substring(0, nLauf));
+                                    }
                                 }
                                 if(s.contains("\"pressure\":"))
                                 {
