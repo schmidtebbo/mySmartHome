@@ -1814,10 +1814,11 @@ public class myHome extends javax.swing.JFrame {
                                                         bn.setText(dev.getTemperature() + "°C");
                                                         if(nDay != dev.get(nDay))
                                                         {
-                                                            String st = dev.getTemperature();
-                                                            int indexOf = st.indexOf(".");
-                                                            int n = Integer.parseInt(st.substring(0, indexOf));
-                                                            dev.addTemp((byte) n);
+//                                                            String st = dev.getMaxTemperature();
+//                                                            int indexOf = st.indexOf(".");
+//                                                            int n = Integer.parseInt(st.substring(0, indexOf));
+                                                            byte n = dev.getMaxTemperature();
+                                                            dev.addTemp(n);
                                                             dev.setnday(nDay);
                                                         }
                                                     }

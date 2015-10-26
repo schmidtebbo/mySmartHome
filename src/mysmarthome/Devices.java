@@ -84,6 +84,7 @@ class Devices {
             {
                 stream.read(nTemperature);
             }
+            stream.close();
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
             Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,6 +102,7 @@ class Devices {
             }
             nTemperature[99] = newTemp;
             stream.write(nTemperature[99]);
+            stream.close();
         } catch (FileNotFoundException ex) {
             File f = new File(myHome.gsConfigDirectory + strName + ".temp");
             try {
@@ -110,6 +112,7 @@ class Devices {
                 {
                     stream.write(0);
                 }
+                stream.close();
             } catch (IOException ex1) {
                 Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -165,7 +168,7 @@ class Devices {
         {
             float f = Float.parseFloat(h);
             f += TempOffset;
-            strTemperature.valueOf(f);
+            strTemperature = String.valueOf(f);
             int i = strTemperature.indexOf('.');
             i = Integer.parseInt(strTemperature.substring(0, i));
             if(i > maxTemp)
@@ -498,10 +501,14 @@ class Devices {
             TempOffset = Float.parseFloat(offset);
             float f = Float.parseFloat(strTemperature);
             f += TempOffset;
-            strTemperature = strTemperature.valueOf(f);
+            strTemperature = String.valueOf(f);
         } catch (NumberFormatException numberFormatException) {
             TempOffset = 0;
         }
+    }
+
+    byte getMaxTemperature() {
+        return maxTemp;
     }
 
 }
