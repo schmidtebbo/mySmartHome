@@ -15,6 +15,9 @@ import javax.swing.ImageIcon;
 public class Statistik extends javax.swing.JFrame {
 
     public byte[] iVal = null;
+    String strToday;
+    String str100days;
+    
     /**
      * Creates new form Statistik
      */
@@ -22,6 +25,8 @@ public class Statistik extends javax.swing.JFrame {
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
         initComponents();
+        strToday =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("today");
+        str100days =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("100days");
         this.setResizable(false);
         this.setBounds(50, 50, this.getBounds().width, this.getBounds().height);
     }
@@ -35,12 +40,12 @@ public class Statistik extends javax.swing.JFrame {
         {
             g.drawLine(50 + 8*i, 325, 50 + 8*i, 335);
         }
-        g.drawString("today", 820, 350);
+        g.drawString(strToday, 820, 350);
         g.drawString("20", 670, 350);
         g.drawString("40", 510, 350);
         g.drawString("60", 370, 350);
         g.drawString("80", 210, 350);
-        g.drawString("100 days ago", 10, 350);
+        g.drawString(str100days, 10, 350);
         for( int i = 0; i < 70; i += 5)
         {
             g.drawLine(45, 50 + i*4, 55, 50 + i*4);
