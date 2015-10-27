@@ -25,6 +25,8 @@ class Devices {
 
     static String  gsConfigDirectory = System.getProperty("user.home") + "/mySmartHome/";
 
+    private boolean bLaunch = true;
+    
     private String strName = null;
     private String strProtokoll = null;
     private String strGUIName = null;
@@ -35,6 +37,7 @@ class Devices {
     public int nHumidity[] = new int[100];
     public byte nTemperature[] = new byte[100];
     private byte maxTemp = -127;
+    public boolean bMustAddTemp = false;
     private float TempOffset = 0;
     public int nAirPressure[] = new int[100];
     private int nDay = 0;
@@ -78,41 +81,30 @@ class Devices {
     
     Devices(String ss) {
         this.strName = ss;
-        try {
-            FileInputStream stream = new FileInputStream(myHome.gsConfigDirectory + strName + ".temp");
-            for(int i = 0; i < 100; i++)
-            {
-                stream.read(nTemperature);
-            }
-            stream.close();
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-            Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void addTemp(byte newTemp)
     {
         try {
-            FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
-            for(int i = 0; i < 99; i++)
-            {
-                nTemperature[i] = nTemperature[i+1];
-                stream.write(nTemperature[i]);
+            try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp")) {
+                for(int i = 0; i < 99; i++)
+                {
+                    nTemperature[i] = nTemperature[i+1];
+                    stream.write(nTemperature[i]);
+                }
+                nTemperature[99] = newTemp;
+                stream.write(nTemperature[99]);
             }
-            nTemperature[99] = newTemp;
-            stream.write(nTemperature[99]);
-            stream.close();
         } catch (FileNotFoundException ex) {
             File f = new File(myHome.gsConfigDirectory + strName + ".temp");
             try {
                 f.createNewFile();
-                FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
-                for(int i = 0; i < 100; i++)
-                {
-                    stream.write(0);
+                try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp")) {
+                    for(int i = 0; i < 100; i++)
+                    {
+                        stream.write(0);
+                    }
                 }
-                stream.close();
             } catch (IOException ex1) {
                 Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -173,6 +165,35 @@ class Devices {
             i = Integer.parseInt(strTemperature.substring(0, i));
             if(i > maxTemp)
                 maxTemp = (byte)i;
+        
+            if(bLaunch)
+            {
+                bLaunch = false;
+                try {
+                    try (FileInputStream stream = new FileInputStream(myHome.gsConfigDirectory + strName + ".temp")) {
+                        for( i = 0; i < 100; i++)
+                        {
+                            stream.read(nTemperature);
+                        }
+                    }
+                } catch (FileNotFoundException ex) {
+                    File fT = new File(myHome.gsConfigDirectory + strName + ".temp");
+                    try {
+                        fT.createNewFile();
+                        try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp")) {
+                            for(i = 0; i < 100; i++)
+                            {
+                                stream.write(0);
+                            }
+                            bMustAddTemp = true;
+                        }
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
     

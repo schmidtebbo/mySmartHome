@@ -1723,7 +1723,7 @@ public class myHome extends javax.swing.JFrame {
                                boolean bDev = false;
                                for (Object myDevice : myDevices) {
                                    Devices dev = (Devices) myDevice;
-                                   if(strMeldungen.contains("\"" + dev.getName() + "\""))
+                                   if(strMeldungen.contains("[\"" + dev.getName() + "\"]"))
                                    {
                                        int nLauf;
                                        switch(dev.getType())
@@ -1814,12 +1814,16 @@ public class myHome extends javax.swing.JFrame {
                                                         bn.setText(dev.getTemperature() + "°C");
                                                         if(nDay != dev.get(nDay))
                                                         {
-//                                                            String st = dev.getMaxTemperature();
-//                                                            int indexOf = st.indexOf(".");
-//                                                            int n = Integer.parseInt(st.substring(0, indexOf));
                                                             byte n = dev.getMaxTemperature();
                                                             dev.addTemp(n);
                                                             dev.setnday(nDay);
+                                                        }
+                                                        if(dev.bMustAddTemp)
+                                                        {
+                                                            byte n = dev.getMaxTemperature();
+                                                            dev.addTemp(n);
+                                                            dev.setnday(nDay);
+                                                            dev.bMustAddTemp = false;
                                                         }
                                                     }
                                                 }
