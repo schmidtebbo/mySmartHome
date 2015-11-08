@@ -568,6 +568,15 @@ public class myHome extends javax.swing.JFrame {
                             {
                                 if(s.contains("\"humidity\":"))
                                 {
+                                    if(s.contains("\"humidity-offset\":"))
+                                    {
+                                        nLauf = s.indexOf("\"humidity-offset\":");
+                                        String str = s.substring(nLauf + 18, s.length());
+                                        nLauf = str.indexOf(".") + 2;
+                                        if(nLauf == 0)
+                                            nLauf++;
+                                        dev.setHumOffset(str.substring(0, nLauf));
+                                    }
                                     nLauf = s.indexOf("\"humidity\":");
                                     String str = s.substring(nLauf + 11, s.length());
                                     nLauf = str.indexOf(",\"");
@@ -575,19 +584,19 @@ public class myHome extends javax.swing.JFrame {
                                 }
                                 if(s.contains("\"temperature\":"))
                                 {
-                                    nLauf = s.indexOf("\"temperature\":");
-                                    String str = s.substring(nLauf + 14, s.length());
-                                    nLauf = str.indexOf(".") + 2;
-                                    dev.setTemperature(str.substring(0,nLauf));
                                     if(s.contains("\"temperature-offset\":"))
                                     {
                                         nLauf = s.indexOf("\"temperature-offset\":");
-                                        str = s.substring(nLauf + 21, s.length());
+                                        String str = s.substring(nLauf + 21, s.length());
                                         nLauf = str.indexOf(".") + 2;
                                         if(nLauf == 0)
                                             nLauf++;
                                         dev.setTempOffset(str.substring(0, nLauf));
                                     }
+                                    nLauf = s.indexOf("\"temperature\":");
+                                    String str = s.substring(nLauf + 14, s.length());
+                                    nLauf = str.indexOf(".") + 2;
+                                    dev.setTemperature(str.substring(0,nLauf));
                                 }
                                 if(s.contains("\"pressure\":"))
                                 {

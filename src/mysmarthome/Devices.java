@@ -35,6 +35,7 @@ class Devices {
     private String strUUID = null;
     
     public int nHumidity[] = new int[100];
+    private float HumOffset = 0;
     public byte nTemperature[] = new byte[100];
     private byte maxTemp = -127;
     public boolean bMustAddTemp = false;
@@ -146,6 +147,12 @@ class Devices {
     public void setHumidity(String h)
     {
         strHumidity = h;
+        if(h != null)
+        {
+            float f = Float.parseFloat(h);
+            f += HumOffset;
+            strHumidity = String.valueOf(f);
+        }
     }
     
     public String getTemperature()
@@ -171,10 +178,7 @@ class Devices {
                 bLaunch = false;
                 try {
                     try (FileInputStream stream = new FileInputStream(myHome.gsConfigDirectory + strName + ".temp")) {
-                        for( i = 0; i < 100; i++)
-                        {
-                            stream.read(nTemperature);
-                        }
+                        stream.read(nTemperature);   
                     }
                 } catch (FileNotFoundException ex) {
                     File fT = new File(myHome.gsConfigDirectory + strName + ".temp");
@@ -192,6 +196,21 @@ class Devices {
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {
+                if(nTemperature[99] < maxTemp)
+                {
+                    nTemperature[99] = maxTemp;
+                    try {
+                        FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
+                        stream.write(nTemperature);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
@@ -520,9 +539,12 @@ class Devices {
     void setTempOffset(String offset) {
         try {
             TempOffset = Float.parseFloat(offset);
-            float f = Float.parseFloat(strTemperature);
-            f += TempOffset;
-            strTemperature = String.valueOf(f);
+            if(strTemperature != null)
+            {
+                float f = Float.parseFloat(strTemperature);
+                f += TempOffset;
+                strTemperature = String.valueOf(f);
+            }
         } catch (NumberFormatException numberFormatException) {
             TempOffset = 0;
         }
@@ -530,6 +552,20 @@ class Devices {
 
     byte getMaxTemperature() {
         return maxTemp;
+    }
+
+    void setHumOffset(String offset) {
+        try {
+            HumOffset = Float.parseFloat(offset);
+            if(strHumidity != null)
+            {
+                float f = Float.parseFloat(strHumidity);
+                f += HumOffset;
+                strHumidity = String.valueOf(f);
+            }
+        } catch (NumberFormatException numberFormatException) {
+            HumOffset = 0;
+        }
     }
 
 }
