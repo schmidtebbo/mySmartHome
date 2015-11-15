@@ -532,7 +532,7 @@ class Devices {
         maxTemp = -127;
     }
 
-    int get(int nDay) {
+    int getnDay() {
         return nDay;
     }
 

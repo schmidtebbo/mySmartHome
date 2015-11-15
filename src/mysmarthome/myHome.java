@@ -483,9 +483,8 @@ public class myHome extends javax.swing.JFrame {
                         
                         String[] strJsonObj = s.split("},\"");
                         
-                        for(int n = 0; n < strJsonObj.length; n++)
-                        {
-                            s = strJsonObj[n] + ",";
+                        for (String strJsonObj1 : strJsonObj) {
+                            s = strJsonObj1 + ",";
                             nLauf = s.indexOf('\"');
                             Devices dev = new Devices(s.substring(0, nLauf));   //name
                             myDevices.add(dev);                                   // add to List of Rooms
@@ -1821,7 +1820,7 @@ public class myHome extends javax.swing.JFrame {
                                                     if(bn != null)
                                                     {
                                                         bn.setText(dev.getTemperature() + "°C");
-                                                        if(nDay != dev.get(nDay))
+                                                        if(nDay != dev.getnDay())
                                                         {
                                                             byte n = dev.getMaxTemperature();
                                                             dev.addTemp(n);
