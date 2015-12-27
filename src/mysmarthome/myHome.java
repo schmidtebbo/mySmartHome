@@ -1695,7 +1695,7 @@ public class myHome extends javax.swing.JFrame {
 
             Timer timer = new Timer(60000, new java.awt.event.ActionListener() {
 
-                @Override
+                @Override 
                 public void actionPerformed(ActionEvent e) {
                     // this is a minute timer
                     Date date = new Date();

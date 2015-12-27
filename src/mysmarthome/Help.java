@@ -16,20 +16,16 @@ import javax.swing.ImageIcon;
  *
  * @author ktams
  */
-public class JHelp extends javax.swing.JFrame {
-    private final int showFile;
-    public String strShowString = null;
-    String strAktKonf = null;
+public class Help extends javax.swing.JFrame {
 
     /**
-     * Creates new form JHelp
+     * Creates new form Help
      */
-    public JHelp(int i) {
+    public Help() {
+        initComponents();
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
-        initComponents();
-        this.showFile = i;
-        setVisible(true);
+        this.setVisible(true);
     }
 
     /**
@@ -43,10 +39,9 @@ public class JHelp extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jHelpText = new javax.swing.JTextArea();
-        jClose = new javax.swing.JButton();
-        jEdit = new javax.swing.JButton();
+        jOK = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -57,17 +52,10 @@ public class JHelp extends javax.swing.JFrame {
         jHelpText.setRows(5);
         jScrollPane1.setViewportView(jHelpText);
 
-        jClose.setText("OK");
-        jClose.addActionListener(new java.awt.event.ActionListener() {
+        jOK.setText("OK");
+        jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCloseActionPerformed(evt);
-            }
-        });
-
-        jEdit.setText("Edit");
-        jEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jEditActionPerformed(evt);
+                jOKActionPerformed(evt);
             }
         });
 
@@ -80,77 +68,59 @@ public class JHelp extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(355, 355, 355)
-                .addComponent(jClose, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addGap(251, 251, 251)
+                .addComponent(jOK, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jClose)
-                    .addComponent(jEdit))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jOK)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCloseActionPerformed
+    private void jOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOKActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jCloseActionPerformed
+    }//GEN-LAST:event_jOKActionPerformed
 
-    public void setTextInArea(String Text)
-    {
-        strAktKonf = Text;
-        jHelpText.setText(Text);
-    }
-    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        InputStream is = null;
-        BufferedReader br = null;
+        InputStream is;
+        BufferedReader br;
         int bytesRead = 0 ;
         char ac[] = new char[10001];
         int n;
         
-        if(showFile == 0)
+        String str = "/piconfig.txt";
+        Class c = getClass();
+        is = c.getResourceAsStream (str);
+        if( is != null)
         {
-            Class c = getClass();
-            is = c.getResourceAsStream ("mySmartHome.hlp");
-            if( is != null)
-            {
-                try {
-                    br = new BufferedReader(new InputStreamReader(is, "UTF8"));
-                    n = br.read(ac, 0, 10000);
-                    ac[n+1] = 0;
-                    bytesRead += n;
-                    br.close();
-                    String str1 = new String(ac);
-                    jHelpText.setText(str1.substring(0, n));
-                    // Cursor ganz oben Positionieren
-                    jHelpText.setSelectionStart(0);
-                    jHelpText.setSelectionEnd(0);
-                } catch (UnsupportedEncodingException ex) {
-                    jHelpText.setText("mySmartHome.hlp not found.\n");
-                } catch (IOException ex) {
-                    jHelpText.setText("mySmartHome.hlp not found.\n");
-                }
-            }        
-            else
-            {
-                jHelpText.setText("mySmartHome.hlp not found.\n");
+            try {
+                br = new BufferedReader(new InputStreamReader(is, "UTF8"));
+                n = br.read(ac, 0, 10000);
+                ac[n+1] = 0;
+                bytesRead += n;
+                br.close();
+                String str1 = new String(ac);
+                jHelpText.setText(str1.substring(0, n));
+                // Cursor ganz oben Positionieren
+                jHelpText.setSelectionStart(0);
+                jHelpText.setSelectionEnd(0);
+            } catch (UnsupportedEncodingException ex) {
+                jHelpText.setText("No help file found");
+            } catch (IOException ex) {
+                jHelpText.setText("No help file found");
             }
         }
+        else
+            jHelpText.setText("No help file found");
     }//GEN-LAST:event_formWindowOpened
-
-    private void jEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditActionPerformed
-        new Config(strAktKonf).setVisible(true);
-    }//GEN-LAST:event_jEditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,28 +139,28 @@ public class JHelp extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JHelp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Help.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JHelp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Help.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JHelp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Help.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JHelp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Help.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JHelp(0).setVisible(true);
+                new Help().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jClose;
-    private javax.swing.JButton jEdit;
     private javax.swing.JTextArea jHelpText;
+    private javax.swing.JButton jOK;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
