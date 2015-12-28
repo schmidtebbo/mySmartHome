@@ -813,110 +813,131 @@ public class Config extends javax.swing.JFrame {
         this.setBounds(bounds);
         if(strAktKonfiguration != null)
         {
-           String str = strAktKonfiguration;
-           bAktKonf = true;
+            String str = strAktKonfiguration;
+            bAktKonf = true;
+        
+            int i = str.indexOf("ces\":{");
+            str = str.substring(i+6, str.length());
+            str = str.replaceAll("\n\n", "\n");
+            str = str.replaceAll("\n", "\t\n");
+            String[] dev = str.split("rules\":");    //dev[0] contains all devices...
+            strDevices = dev[0].substring(1, dev[0].lastIndexOf("}")+1);
+            String[] gui = dev[1].split("gui\":");   //gui[0] contains the rules, gui[1] contains the gui elements and settings
+            strRules = gui[0].substring(0, gui[0].length());
+            i = strRules.indexOf("{");
+            strRules = strRules.substring(i+1, strRules.length());  //strip leading {
+            String[] Temp = gui[1].split("settings\":");
+            i = Temp[0].indexOf("{");
+            strGUI = Temp[0].substring(i+1, Temp[0].lastIndexOf("}")+1);
+            Temp = dev[1].split("settings\":");
+            strSettings = Temp[1].substring(0, Temp[1].length());
+            DeviceList = new ArrayList<>();
+            Temp = dev[0].split("},");
+            i = Temp[Temp.length-2].lastIndexOf('}');
+            if(i != -1)
+            {
+                Temp[Temp.length-2] = Temp[Temp.length-2].substring(0, i);
+            }
+            Temp[0] = "\t\n" + Temp[0];             //adjust first element
+            DeviceList.addAll(Arrays.asList(Temp));
+            jDevices.removeAll();
+            DevlistenModell = new DefaultListModel();
+            DeviceList.remove(DeviceList.size()-1);
+            DevlistenModell.addElement("<html><pre>Device\t\t[ \"protocol\" ]</pre></html>");
 
-        
-        
-        
-        
-        
-                    int i = str.indexOf(":");
-                    str = str.substring(i+3, str.length());
-                    i = str.indexOf(":");
-                    str = str.substring(i+3, str.length());
-                    i = str.indexOf(":");
-                    str = str.substring(i+2, str.length());
-                    String[] dev = str.split("rules\":");    //dev[0] contains all devices...
-                    strDevices = dev[0].substring(1, dev[0].lastIndexOf("}")+1);
-                    String[] gui = dev[1].split("gui\":");   //gui[0] contains the rules, gui[1] contains the gui elements and settings
-                    strRules = gui[0].substring(0, gui[0].length());
-                    i = strRules.indexOf("{");
-                    strRules = strRules.substring(i+1, strRules.length());  //strip leading {
-                    String[] Temp = gui[1].split("settings\":");
-                    i = Temp[0].indexOf("{");
-                    strGUI = Temp[0].substring(i+1, Temp[0].lastIndexOf("}")+1);
-                    Temp = dev[1].split("settings\":");
-                    strSettings = Temp[1].substring(0, Temp[1].length());
-                    DeviceList = new ArrayList<>();
-                    Temp = dev[0].split("},");
-                    i = Temp[Temp.length-2].lastIndexOf('}');
-                    if(i != -1)
+            for( i = 0; i < DeviceList.size(); i++)
+            {
+                String[] tmp = Temp[i].split("\n");
+                if(tmp.length < 4)
+                {
+                    DeviceList.remove(i);
+                    break;
+                }
+                str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
+                s = "\n\t\t\"" + str.substring(0, str.indexOf("\"")) + "\": {";
+                str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
+                str += tmp[4].substring(tmp[4].indexOf(":") + 1, tmp[4].length()) + "</pre></html>";
+                DevlistenModell.addElement(str);
+                for(int j = 4; j < tmp.length; j++)
+                {
+                    if(j == tmp.length-1)
                     {
-                        Temp[Temp.length-2] = Temp[Temp.length-2].substring(0, i);
+                        s += "\n\t\t" + tmp[j] + "\n\t";
                     }
-                    DeviceList.addAll(Arrays.asList(Temp));
-                    jDevices.removeAll();
-                    DevlistenModell = new DefaultListModel();
-                    DeviceList.remove(DeviceList.size()-1);
-                    DevlistenModell.addElement("<html><pre>Device\t\t[ \"protocol\" ]</pre></html>");
-                    
-                    for( i = 0; i < DeviceList.size(); i++)
+                    else if(tmp[j].contains("[{"))
                     {
-                        String[] tmp = Temp[i].split("\n");
-                        if(tmp.length < 4)
+                        s += "\n\t\t" + tmp[j].substring(0, tmp[j].indexOf("[{")+2);
+                        if(tmp[j].contains("}]"))
                         {
-                            DeviceList.remove(i);
-                            break;
+                            s += "\n\t\t\t" + tmp[j].substring(tmp[j].indexOf("[{") + 2, tmp[j].indexOf("}]"));
+                            s += "\n\t\t" + tmp[j].substring(tmp[j].indexOf("}]"));
                         }
-                        str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
-                        str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
-                        str += tmp[2].substring(tmp[2].indexOf(":") + 1, tmp[2].length()) + "</pre></html>";
-                        DevlistenModell.addElement(str);
+                        else
+                            s += "\n\t\t\t" + tmp[j].substring(tmp[j].indexOf("[{") + 2);
                     }
-                    jDevices.setModel(DevlistenModell);
-                    
-                    RulesList = new ArrayList<>();
-                    Temp = strRules.split("},");
-                    i = Temp[Temp.length-2].lastIndexOf('}');
-                    if(i != -1)
+                    else if(tmp[j].contains("}]"))
                     {
-                        Temp[Temp.length-2] = Temp[Temp.length-2].substring(0, i);
-                        RulesList.addAll(Arrays.asList(Temp));
-                        RulesList.remove(RulesList.size()-1);
+                        s += "\n\t\t\t" + tmp[j].substring(0, tmp[j].indexOf("}]"));
+                        s += "\n\t\t" + tmp[j].substring(tmp[j].indexOf("}]"));
                     }
-                    
-                    GUIList = new ArrayList<>();
-                    i = gui[1].indexOf("{");
-                    gui[1] = gui[1].substring(i+1, gui[1].length());
-                    Temp = gui[1].split("settings");
-                    Temp[0] = Temp[0].substring(0, Temp[0].length());
-                    Temp = Temp[0].split("},");
-                    i = Temp[Temp.length-2].lastIndexOf('}');
-                    if(i != -1)
+                    else
                     {
-                        Temp[Temp.length-2] = Temp[Temp.length-2].substring(0, i);
+                        s += "\n\t\t" + tmp[j];
                     }
-                    GUIList.addAll(Arrays.asList(Temp));
-                    GUIList.remove(GUIList.size() - 1);
-                    jGUI.removeAll();
-                    GUIlistenModell = new DefaultListModel();
-                    GUIlistenModell.addElement("<html><pre>Device\t\t\"name\"\t\t[ \"group\" ] </pre></html>");
-                    for( i = 0; i < GUIList.size(); i++)
-                    {
-                        String[] tmp = Temp[i].split("\n");
-                        if(tmp.length < 4)
-                        {
-                            GUIList.remove(i);
-                            break;
-                        }
-                        str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
-                        str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
-                        str += tmp[2].substring(tmp[2].indexOf(":") + 1, tmp[2].length())+ "\t";
-                        str += tmp[3].substring(tmp[3].indexOf(":") + 1, tmp[3].length()) + "</pre></html>";
-                        GUIlistenModell.addElement(str);
-                    }
-                    jGUI.setModel(GUIlistenModell);
-                    jNewDevice.setEnabled(true);
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                }
+                DeviceList.set(i, s);
+            }
+            jDevices.setModel(DevlistenModell);
+
+            RulesList = new ArrayList<>();
+            Temp = strRules.split("},");
+            Temp[0] = "\n\t" + Temp[0];
+            i = Temp[Temp.length-2].lastIndexOf('}');
+            if(i != -1)
+            {
+                Temp[Temp.length-2] = Temp[Temp.length-2].substring(0, i);
+                for(i = 0; i < Temp.length; i++)
+                {
+                    Temp[i] = Temp[i].replace("{", " {\n\t");
+                    Temp[i] = Temp[i].replace("\t\n", "\n\t");
+                    Temp[i] += "\n\t";
+                }
+                RulesList.addAll(Arrays.asList(Temp));
+                RulesList.remove(RulesList.size()-1);
+            }
+
+            GUIList = new ArrayList<>();
+            i = gui[1].indexOf("{");
+            gui[1] = gui[1].substring(i+1, gui[1].length());
+            Temp = gui[1].split("settings");
+            Temp = Temp[0].split("},");
+            i = Temp[Temp.length-2].lastIndexOf('}');
+            if(i != -1)
+            {
+                Temp[Temp.length-2] = Temp[Temp.length-2].substring(0, i);
+            }
+            Temp[0] = "\t\n" + Temp[0];
+            GUIList.addAll(Arrays.asList(Temp));
+            GUIList.remove(GUIList.size() - 1);
+            jGUI.removeAll();
+            GUIlistenModell = new DefaultListModel();
+            GUIlistenModell.addElement("<html><pre>Device\t\t\"name\"\t\t[ \"group\" ] </pre></html>");
+            for( i = 0; i < GUIList.size(); i++)
+            {
+                String[] tmp = Temp[i].split("\n");
+                if(tmp.length < 4)
+                {
+                    GUIList.remove(i);
+                    break;
+                }
+                str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
+                str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
+                str += tmp[3].substring(tmp[3].indexOf(":") + 1, tmp[3].length())+ "\t";
+                str += tmp[4].substring(tmp[4].indexOf(":") + 1, tmp[4].length()) + "</pre></html>";
+                GUIlistenModell.addElement(str);
+            }
+            jGUI.setModel(GUIlistenModell);
+            jNewDevice.setEnabled(true);
         }
     }//GEN-LAST:event_formWindowOpened
 
