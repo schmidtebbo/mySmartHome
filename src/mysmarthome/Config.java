@@ -33,7 +33,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Config extends javax.swing.JFrame {
 
-    static String  Version = "Version 0.5";
     
     static String  gsConfigDirectory = System.getProperty("user.home") + "/mySmartHome/";
     static String  gsConfigFilename  = System.getProperty("user.home") + "/mySmartHome/" + "properties";
@@ -70,7 +69,6 @@ public class Config extends javax.swing.JFrame {
         initComponents();
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
-        jVersionNo.setText(Version);
     }
 
     Config(String strAktKonf) {
@@ -80,7 +78,6 @@ public class Config extends javax.swing.JFrame {
         initComponents();
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
-        jVersionNo.setText(Version);
     }
 
     /**
@@ -108,7 +105,6 @@ public class Config extends javax.swing.JFrame {
         jRules = new javax.swing.JButton();
         jLoad = new javax.swing.JButton();
         jHelp = new javax.swing.JButton();
-        jVersionNo = new javax.swing.JLabel();
         jSettings = new javax.swing.JButton();
         jCopy = new javax.swing.JButton();
         jAddGUI_Element = new javax.swing.JButton();
@@ -235,8 +231,6 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jVersionNo.setText("Version 0.1");
-
         jSettings.setText("Settings");
         jSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,10 +295,7 @@ public class Config extends javax.swing.JFrame {
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(275, 275, 275)
                                         .addComponent(jLabelGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jVersionNo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(132, 132, 132)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(296, 296, 296)
                                 .addComponent(jHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -315,7 +306,6 @@ public class Config extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jVersionNo)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel1))
@@ -831,6 +821,11 @@ public class Config extends javax.swing.JFrame {
             strGUI = Temp[0].substring(i+1, Temp[0].lastIndexOf("}")+1);
             Temp = dev[1].split("settings\":");
             strSettings = Temp[1].substring(0, Temp[1].length());
+            strSettings = strSettings.replace("{", "{\n\t\t");
+            strSettings = strSettings.replace("}", "\n}");
+            strSettings = strSettings.replace("\n", "\n\t\t");
+            i = strSettings.lastIndexOf("},");
+            strSettings = strSettings.substring(0, i);
             DeviceList = new ArrayList<>();
             Temp = dev[0].split("},");
             i = Temp[Temp.length-2].lastIndexOf('}');
@@ -931,10 +926,18 @@ public class Config extends javax.swing.JFrame {
                     break;
                 }
                 str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
+                s = "\n\t\t\"" + str.substring(0, str.indexOf("\"")) + "\": {";
                 str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
                 str += tmp[3].substring(tmp[3].indexOf(":") + 1, tmp[3].length())+ "\t";
                 str += tmp[4].substring(tmp[4].indexOf(":") + 1, tmp[4].length()) + "</pre></html>";
                 GUIlistenModell.addElement(str);
+            
+                for(int j = 3; j < tmp.length; j++)
+                {
+                    s += "\n\t\t\t" + tmp[j];
+                }
+                s += "\n\t\t";
+                GUIList.set(i, s);
             }
             jGUI.setModel(GUIlistenModell);
             jNewDevice.setEnabled(true);
@@ -1113,6 +1116,5 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jSettings;
-    private javax.swing.JLabel jVersionNo;
     // End of variables declaration//GEN-END:variables
 }

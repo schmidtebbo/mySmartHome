@@ -71,11 +71,7 @@
                                       <EmptySpace min="-2" pref="275" max="-2" attributes="0"/>
                                       <Component id="jLabelGUI" min="-2" pref="84" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jVersionNo" min="-2" pref="131" max="-2" attributes="0"/>
-                                      <EmptySpace min="132" pref="132" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="204" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel1" min="-2" pref="204" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="296" pref="296" max="-2" attributes="0"/>
                               <Component id="jHelp" min="-2" pref="105" max="-2" attributes="0"/>
@@ -93,7 +89,6 @@
           <Group type="102" attributes="0">
               <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jVersionNo" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -277,11 +272,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jHelpActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jVersionNo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Version 0.1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jSettings">
       <Properties>
