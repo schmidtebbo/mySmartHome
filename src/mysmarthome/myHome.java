@@ -77,6 +77,7 @@ public class myHome extends javax.swing.JFrame {
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     int nDay = 0;
     boolean bMustUpdate = false;
+    boolean bHeartSent = false;
 
     private Color convertColorString(String labelColor) {
         switch(labelColor)
@@ -176,6 +177,8 @@ public class myHome extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jShowOverview = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        jCPU = new javax.swing.JLabel();
+        jRAM = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -231,6 +234,10 @@ public class myHome extends javax.swing.JFrame {
 
         jLabel1.setText(bundle.getString("myHome.jLabel1.text")); // NOI18N
 
+        jCPU.setText(bundle.getString("myHome.jCPU.text")); // NOI18N
+
+        jRAM.setText(bundle.getString("myHome.jRAM.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,6 +253,10 @@ public class myHome extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jShowOverview)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRAM)
+                            .addComponent(jCPU))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -260,13 +271,18 @@ public class myHome extends javax.swing.JFrame {
                 .addComponent(jTabbedPane)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jExit)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)
-                        .addComponent(jShowOverview)
-                        .addComponent(jLabel1))
-                    .addComponent(jDaemon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jExit)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2)
+                            .addComponent(jShowOverview)
+                            .addComponent(jLabel1))
+                        .addComponent(jDaemon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCPU)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRAM)))
                 .addContainerGap())
         );
 
@@ -1687,21 +1703,29 @@ public class myHome extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, s);
                     System.exit(0);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(myHome.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
+            } catch (IOException | InterruptedException ex) {
                 Logger.getLogger(myHome.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            Timer timer = new Timer(60000, new java.awt.event.ActionListener() {
+            Timer timer = new Timer(6000, new java.awt.event.ActionListener() {
 
                 @Override 
                 public void actionPerformed(ActionEvent e) {
-                    // this is a minute timer
-                    Date date = new Date();
-                    String format = sdf.format(date);
-                    nDay = format.indexOf('.');
-                    nDay = Integer.parseInt(format.substring(0, nDay));
+                    // this is a 6 seconds timer
+                    if(bHeartSent)
+                    {
+                        JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("lostConnection"));
+                        System.exit(0);
+                    }
+                    int i = 0;
+                    if((i++ % 10) == 0)
+                    {   //every minute...
+                        Date date = new Date();
+                        String format = sdf.format(date);
+                        nDay = format.indexOf('.');
+                        nDay = Integer.parseInt(format.substring(0, nDay));
+                    }
+                    bHeartSent = true;
                 }
             });
             timer.start();
@@ -1715,7 +1739,7 @@ public class myHome extends javax.swing.JFrame {
                         if(bufferedReader == null) {
                             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"), size);
                         }
-                        printStream.print("{\"action\":\"identify\",\"options\":{\"core\":0,\"receiver\":0,\"config\":1,\"forward\":0}}\n");
+                        printStream.print("{\"action\":\"identify\",\"options\":{\"core\":0,\"receiver\":0,\"config\":1,\"forward\":0,\"stats\":1}}\n");
                         printStream.flush();
                         int c;
                         String s;
@@ -1728,6 +1752,19 @@ public class myHome extends javax.swing.JFrame {
                                }
                                strMeldungen = response.toString() + '\n';
                                response.delete(0, 1025);
+                               if(strMeldungen.contains("cpu"))
+                               {
+                                   c = strMeldungen.indexOf("\"cpu\"");
+                                   s = strMeldungen.substring(c, c + 15);
+                                   jCPU.setText(s);
+                                   if(strMeldungen.contains("ram"))
+                                   {
+                                       bHeartSent = false;
+                                       c = strMeldungen.indexOf("\"ram\"");
+                                       s = strMeldungen.substring(c, c + 15);
+                                       jRAM.setText(s);
+                                   }
+                               }
                                boolean bDev = false;
                                for (Object myDevice : myDevices) {
                                    Devices dev = (Devices) myDevice;
@@ -2084,10 +2121,12 @@ public class myHome extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jCPU;
     private javax.swing.JLabel jDaemon;
     private javax.swing.JButton jExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jOverview;
+    private javax.swing.JLabel jRAM;
     private javax.swing.JCheckBox jShowOverview;
     private javax.swing.JTabbedPane jTabbedPane;
     // End of variables declaration//GEN-END:variables
