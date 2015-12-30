@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "pollin" ],
+			"id": [{
+				"systemcode": \i,
+				"unitcode": \i
+			}],
+			"state": \s
+		} 

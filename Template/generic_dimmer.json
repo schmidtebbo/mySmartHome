@@ -1,0 +1,9 @@
+	\s: {
+		"protocol": [ "generic_dimmer" ],
+		"id": [{
+			"id": \i
+		}],
+		"state": \s,
+		"dimlevel": \i
+	}
+ 

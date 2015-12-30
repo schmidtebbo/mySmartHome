@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "brennenstuhl" ],
+			"id": [{
+				"systemcode": \i,
+				"unitcode": \i
+			}],
+			"state": \s
+		} 

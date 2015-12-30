@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "dio_switch" ],
+		"id": [{
+			"id": \i,
+			"unit": \i
+		}],
+		"state": \s
+	}

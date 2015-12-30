@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "logilink_switch" ],
+			"id": [{
+				"systemcode": \i,
+				"unitcode": \i
+			}],
+			"state": \s
+		} 

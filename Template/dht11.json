@@ -1,0 +1,9 @@
+        \s: {
+            "protocol": [ "dht11" ],
+            "id": [{
+                "gpio": \i
+            }],
+            "humidity": \f,
+            "temperature": \f,
+            "poll-interval": \i
+        } 

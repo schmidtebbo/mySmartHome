@@ -1,0 +1,12 @@
+	\s: {
+		"protocol": [ "program" ],
+		"id": [{
+			"name": \s
+		}],
+		"program": \s,
+		"arguments": \s,
+		"stop-command": \s,
+		"start-command": \s,
+		"state": \s,
+		"pid": \i
+	}

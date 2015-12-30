@@ -1,0 +1,14 @@
+	\s: {
+		"protocol": [ "wunderground" ],
+		"id": [{
+			"api": "1ihn472a6ea384jd",
+			"location": \s,
+			"country": \s
+		}],
+		"humidity": \f,
+		"temperature": \f,
+		"sunrise": \f,
+		"sunset": \f,
+		"sun": \s,
+                "update": \i
+	}

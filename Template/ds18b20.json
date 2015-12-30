@@ -1,0 +1,8 @@
+        \s: {
+            "protocol": [ "ds18b20" ],
+            "id": [{
+                "id": \s
+            }],
+            "temperature": \f,
+            "poll-interval": \i
+        } 

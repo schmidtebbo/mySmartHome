@@ -1,0 +1,10 @@
+	\s: {
+		"protocol": [ "kaku_dimmer" ],
+		"id": [{
+			"id": \i,
+			"unit": 0
+		}],
+		"state": \s,
+		"dimlevel": \i
+	}
+ 

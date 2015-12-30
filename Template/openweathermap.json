@@ -1,0 +1,13 @@
+	\s: {
+		"protocol": [ "openweathermap" ],
+		"id": [{
+			"country": \s,
+			"location": \s
+		}],
+		"humidity": \f,
+		"temperature": \f,
+		"sunrise": \f,
+		"sunset": \f,
+		"sun": \s,
+		"update": \i
+	}

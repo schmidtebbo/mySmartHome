@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "kaku_screen" ],
+		"id": [{
+			"id": \i,
+			"unit": \i
+		}],
+		"state": \s
+	}

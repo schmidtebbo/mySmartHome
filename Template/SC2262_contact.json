@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "SC2262" ],
+			"id": [{
+				"systemcode": \i,
+				"unitcode": \i
+			}],
+			"state": \s
+		} 

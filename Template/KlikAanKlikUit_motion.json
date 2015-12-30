@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "kaku_motion" ],
+		"id": [{
+			"id": \i,
+			"unit": \i
+		}],
+		"state": \s
+	}

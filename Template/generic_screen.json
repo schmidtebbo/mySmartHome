@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "generic_screen" ],
+		"id": [{
+			"id": \i
+		}],
+		"state": \s
+	}
+ 

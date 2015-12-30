@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "generic_switch" ],
+		"id": [{
+			"id": \i
+		}],
+		"state": \s
+	}
+ 

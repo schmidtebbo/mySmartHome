@@ -1,0 +1,7 @@
+		\s: {
+			"protocol": [ "ev1527" ],
+			"id": [{
+				"unitcode": \i
+			}],
+			"state": \s
+		} 

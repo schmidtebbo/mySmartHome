@@ -1,0 +1,9 @@
+		\s: {
+			"protocol": [ "generic_label" ],
+			"id": [{
+				"id": 100
+			}],
+			"label": \s,
+			"color": \s
+		}
+ 

@@ -1,0 +1,9 @@
+        \s: {
+            "protocol": [ "bmp180" ],
+            "id": [{
+                "id": \s
+            }],
+            "temperature": \f,
+            "pressure": \f,
+            "oversampling": \i
+        } 

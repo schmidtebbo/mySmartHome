@@ -1,0 +1,9 @@
+	\s: {
+		"protocol": [ "xbmc" ],
+		"id": [{
+			"server": \s,
+			"port": \i
+		}],
+		"action": \s,
+		"media": \s
+	}

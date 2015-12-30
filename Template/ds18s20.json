@@ -1,0 +1,7 @@
+        \s: {
+            "protocol": [ "ds18s20" ],
+            "id": [{
+                "id": \s
+            }],
+            "temperature": \f,
+        } 

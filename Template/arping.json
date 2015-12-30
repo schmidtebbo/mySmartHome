@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "arping" ],
+		"id": [{
+			"mac": \s
+		}],
+		"ip": \s,
+		"state": \s
+	}

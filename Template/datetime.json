@@ -1,0 +1,14 @@
+        \s: {
+            "protocol": [ "datetime" ],
+            "id": [{
+                "longitude": \s,
+                "latitude": \s,
+                "ntpserver": \s
+            }],
+            "year": \i,
+            "month": \i,
+            "day": \i,
+            "hour": \i,
+            "minute": \i,
+            "second": \i
+        } 

@@ -1,0 +1,9 @@
+	\s: {
+		"protocol": [ "generic_weather" ],
+		"id": [{
+			"id": \i
+		}],
+		"temperature": \f,
+		"humidity": \f,
+		"battery": \i
+	}

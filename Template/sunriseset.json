@@ -1,0 +1,10 @@
+	\s: {
+		"protocol": [ "sunriseset" ],
+		"id": [{
+			"longitude": \f,
+			"latitude": \f0
+		}],
+		"sunrise": \f,
+		"sunset": \f,
+		"sun": \s"
+	}

@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "rsl366" ],
+			"id": [{
+				"systemcode": \i,
+				"programcode": \i
+			}],
+			"state": \s
+		} 

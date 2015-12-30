@@ -1,0 +1,7 @@
+	\s: {
+		"protocol": [ "ping" ],
+		"id": [{
+			"ip": \s
+		}],
+		"state": \s
+	}

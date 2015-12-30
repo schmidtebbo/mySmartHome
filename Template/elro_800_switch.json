@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "elro_800_switch" ],
+			"id": [{
+				"systemcode": \i,
+				"unitcode": \i
+			}],
+			"state": \s
+		} 

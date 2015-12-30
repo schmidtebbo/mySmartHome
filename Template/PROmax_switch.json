@@ -1,0 +1,8 @@
+		\s: {
+			"protocol": [ "promax" ],
+			"id": [{
+				"systemcode": \i,
+				"programcode": \i
+			}],
+			"state": \s
+		} 

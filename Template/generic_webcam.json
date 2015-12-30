@@ -1,0 +1,7 @@
+	\s: {
+		"protocol": [ "generic_webcam" ],
+		"id": [{
+			"id": \i
+		}],
+		"url": \s
+	}

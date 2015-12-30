@@ -1,0 +1,7 @@
+	\s: {
+		"protocol": [ "gpio_switch" ],
+		"id": [{
+			"gpio": \i
+		}],
+		"state": \s
+	}

@@ -1,0 +1,8 @@
+	\s: {
+		"protocol": [ "cpu_temp" ],
+		"id": [{
+			"id": \i
+		}],
+		"temperature": \f,
+		"poll-interval": \i
+	}
