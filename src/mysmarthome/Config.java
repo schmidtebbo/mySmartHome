@@ -74,6 +74,56 @@ public class Config extends javax.swing.JFrame {
 
     Config(String strAktKonf, JHelp aThis) {
         this.strAktKonfiguration = strAktKonf;
+        int i = 0;
+        String s = "";
+        while(true)
+        {    
+            i = strAktKonfiguration.indexOf("(");
+            if(i == -1)
+            {
+                s += strAktKonfiguration;
+                strAktKonfiguration = s;
+                break;
+            }
+            s += strAktKonfiguration.substring(0, i);
+            strAktKonfiguration = strAktKonfiguration.substring(i);
+            i = strAktKonfiguration.indexOf(")");
+            String str = strAktKonfiguration.substring(0, i);
+            if(str.contains("\n"))
+            {
+                str = str.replace("\n", "");
+            }
+            if(str.contains("\t"))
+            {
+                str = str.replace("\t", "");
+            }
+            s += str;
+            strAktKonfiguration = strAktKonfiguration.substring(i, strAktKonfiguration.length());
+        }
+        while(true)
+        {    
+            i = strAktKonfiguration.indexOf("[");
+            if(i == -1)
+            {
+                s += strAktKonfiguration;
+                strAktKonfiguration = s;
+                break;
+            }
+            s += strAktKonfiguration.substring(0, i);
+            strAktKonfiguration = strAktKonfiguration.substring(i);
+            i = strAktKonfiguration.indexOf("]");
+            String str = strAktKonfiguration.substring(0, i);
+            if(str.contains("\n"))
+            {
+                str = str.replace("\n", "");
+            }
+            if(str.contains("\t"))
+            {
+                str = str.replace("\t", "");
+            }
+            s += str;
+            strAktKonfiguration = strAktKonfiguration.substring(i, strAktKonfiguration.length());
+        }
         this.cbuf = null;
         this.LastSelectedFile = null;
         myParent = aThis;
