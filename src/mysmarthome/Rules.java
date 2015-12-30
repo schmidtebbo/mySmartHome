@@ -56,14 +56,15 @@ public class Rules extends javax.swing.JFrame {
             }
         });
 
-        jOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("mysmarthome/Bundle"); // NOI18N
+        jOK.setText(bundle.getString("Rules.jOK.text")); // NOI18N
         jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jOKActionPerformed(evt);
             }
         });
 
-        jCancel.setText("Cancel");
+        jCancel.setText(bundle.getString("Rules.jCancel.text")); // NOI18N
         jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCancelActionPerformed(evt);
@@ -71,7 +72,7 @@ public class Rules extends javax.swing.JFrame {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("rules editor");
+        jLabel1.setText(bundle.getString("Rules.jLabel1.text")); // NOI18N
 
         jRulesList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "rules" };
@@ -85,14 +86,14 @@ public class Rules extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jRulesList);
 
-        jDel.setText("delete");
+        jDel.setText(bundle.getString("Rules.jDel.text")); // NOI18N
         jDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDelActionPerformed(evt);
             }
         });
 
-        jNew.setText("new");
+        jNew.setText(bundle.getString("Rules.jNew.text")); // NOI18N
         jNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jNewActionPerformed(evt);

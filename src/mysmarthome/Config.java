@@ -59,6 +59,7 @@ public class Config extends javax.swing.JFrame {
     int Windows_X;
     Rectangle AdjBounds, AddGUI_ElementBounds, DelGUI_ElementBounds, LabelBounds, GUI_Bounds, GUI_ScrollBounds;
     Dimension DevicesScrollDimension, DevicesDimension;
+    JHelp myParent;
     
     /**
      * Creates new form Config
@@ -71,10 +72,11 @@ public class Config extends javax.swing.JFrame {
         this.setIconImage(II.getImage());
     }
 
-    Config(String strAktKonf) {
+    Config(String strAktKonf, JHelp aThis) {
         this.strAktKonfiguration = strAktKonf;
         this.cbuf = null;
         this.LastSelectedFile = null;
+        myParent = aThis;
         initComponents();
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
@@ -123,16 +125,17 @@ public class Config extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("pilight config editor");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("mysmarthome/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("Config.jLabel1.text")); // NOI18N
 
-        jExit.setText("Exit");
+        jExit.setText(bundle.getString("Config.jExit.text")); // NOI18N
         jExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jExitActionPerformed(evt);
             }
         });
 
-        jSave.setText("save config");
+        jSave.setText(bundle.getString("Config.jSave.text")); // NOI18N
         jSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jSaveActionPerformed(evt);
@@ -153,7 +156,7 @@ public class Config extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jDevices);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Devices");
+        jLabel2.setText(bundle.getString("Config.jLabel2.text")); // NOI18N
 
         jGUI.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "no GUI elements" };
@@ -169,9 +172,9 @@ public class Config extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jGUI);
 
         jLabelGUI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelGUI.setText("GUI");
+        jLabelGUI.setText(bundle.getString("Config.jLabelGUI.text")); // NOI18N
 
-        jNewDevice.setText("new");
+        jNewDevice.setText(bundle.getString("Config.jNewDevice.text")); // NOI18N
         jNewDevice.setEnabled(false);
         jNewDevice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,14 +182,14 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jDelDevice.setText("delete");
+        jDelDevice.setText(bundle.getString("Config.jDelDevice.text")); // NOI18N
         jDelDevice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDelDeviceActionPerformed(evt);
             }
         });
 
-        jAdjust.setText("<>");
+        jAdjust.setText(bundle.getString("Config.jAdjust.text")); // NOI18N
         jAdjust.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jAdjustMouseDragged(evt);
@@ -203,42 +206,42 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jDelGUI_Element.setText("<<");
+        jDelGUI_Element.setText(bundle.getString("Config.jDelGUI_Element.text")); // NOI18N
         jDelGUI_Element.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDelGUI_ElementActionPerformed(evt);
             }
         });
 
-        jRules.setText("Rules");
+        jRules.setText(bundle.getString("Config.jRules.text")); // NOI18N
         jRules.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRulesActionPerformed(evt);
             }
         });
 
-        jLoad.setText("load config");
+        jLoad.setText(bundle.getString("Config.jLoad.text")); // NOI18N
         jLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jLoadActionPerformed(evt);
             }
         });
 
-        jHelp.setText("Help");
+        jHelp.setText(bundle.getString("Config.jHelp.text")); // NOI18N
         jHelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jHelpActionPerformed(evt);
             }
         });
 
-        jSettings.setText("Settings");
+        jSettings.setText(bundle.getString("Config.jSettings.text")); // NOI18N
         jSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jSettingsActionPerformed(evt);
             }
         });
 
-        jCopy.setText("copy");
+        jCopy.setText(bundle.getString("Config.jCopy.text")); // NOI18N
         jCopy.setEnabled(false);
         jCopy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,7 +249,7 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jAddGUI_Element.setText(">>");
+        jAddGUI_Element.setText(bundle.getString("Config.jAddGUI_Element.text")); // NOI18N
         jAddGUI_Element.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jAddGUI_ElementActionPerformed(evt);
@@ -731,7 +734,14 @@ public class Config extends javax.swing.JFrame {
         String get = DeviceList.get(selectedIndex);
         if(evt.getClickCount() == 2)
         {
-            NewDevice newDevice = new NewDevice(this, new String(cbuf), selectedIndex,jGUI.getSelectedIndex());
+            if(cbuf == null)
+            {
+                NewDevice newDevice = new NewDevice(this, strDevices, selectedIndex,jGUI.getSelectedIndex());   
+            }
+            else
+            {
+                NewDevice newDevice = new NewDevice(this, new String(cbuf), selectedIndex,jGUI.getSelectedIndex());
+            }
         }
         else
         {
@@ -795,7 +805,7 @@ public class Config extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String s = prop.getProperty("pilightConf","30;30");
+        String s = prop.getProperty("pilightConf",""+(myParent.getBounds().x + 10)+";"+(myParent.getBounds().y + 10));
         String strBounds[] = s.split(";");
         Rectangle bounds = this.getBounds();
         bounds.x = Integer.parseInt(strBounds[0]);

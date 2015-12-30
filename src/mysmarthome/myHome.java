@@ -2027,11 +2027,11 @@ public class myHome extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JHelp HLP = new JHelp(0);
+        JHelp HLP = new JHelp(0, this);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JHelp HLP = new JHelp(1);
+        JHelp HLP = new JHelp(1, this);
         String str = "";
         for (String strConfig1 : strConfig) {
             strConfig1 += ",";

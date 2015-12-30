@@ -70,51 +70,52 @@ public class GuiEditor extends javax.swing.JFrame {
             }
         });
 
-        jOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("mysmarthome/Bundle"); // NOI18N
+        jOK.setText(bundle.getString("GuiEditor.jOK.text")); // NOI18N
         jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jOKActionPerformed(evt);
             }
         });
 
-        jCancel.setText("Cancel");
+        jCancel.setText(bundle.getString("GuiEditor.jCancel.text")); // NOI18N
         jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCancelActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("pilight GUI Editor");
+        jLabel1.setText(bundle.getString("GuiEditor.jLabel1.text")); // NOI18N
 
-        jLabel2.setText("Device:");
+        jLabel2.setText(bundle.getString("GuiEditor.jLabel2.text")); // NOI18N
 
-        jLabel3.setText("Name:");
+        jLabel3.setText(bundle.getString("GuiEditor.jLabel3.text")); // NOI18N
 
-        jLabel4.setText("Group:");
+        jLabel4.setText(bundle.getString("GuiEditor.jLabel4.text")); // NOI18N
 
-        jLabel5.setText("Media:");
+        jLabel5.setText(bundle.getString("GuiEditor.jLabel5.text")); // NOI18N
 
         jDeviceText.setEditable(false);
 
         jMedia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mobile", "Web", "Desktop", "All" }));
 
-        jLabel6.setText("Readonly:");
+        jLabel6.setText(bundle.getString("GuiEditor.jLabel6.text")); // NOI18N
 
-        jLabel7.setText("Confirm:");
+        jLabel7.setText(bundle.getString("GuiEditor.jLabel7.text")); // NOI18N
 
         buttonGroup1.add(jReadNo);
         jReadNo.setSelected(true);
-        jReadNo.setText("no");
+        jReadNo.setText(bundle.getString("GuiEditor.jReadNo.text")); // NOI18N
 
         buttonGroup1.add(jReadYes);
-        jReadYes.setText("yes");
+        jReadYes.setText(bundle.getString("GuiEditor.jReadYes.text")); // NOI18N
 
         buttonGroup2.add(jConfNo);
         jConfNo.setSelected(true);
-        jConfNo.setText("no");
+        jConfNo.setText(bundle.getString("GuiEditor.jConfNo.text")); // NOI18N
 
         buttonGroup2.add(jConfYes);
-        jConfYes.setText("yes");
+        jConfYes.setText(bundle.getString("GuiEditor.jConfYes.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

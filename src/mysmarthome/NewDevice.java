@@ -67,25 +67,26 @@ public class NewDevice extends javax.swing.JFrame {
         });
 
         jHeadLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jHeadLabel.setText("Add new device");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("mysmarthome/Bundle"); // NOI18N
+        jHeadLabel.setText(bundle.getString("NewDevice.jHeadLabel.text")); // NOI18N
 
-        jOK.setText("OK");
+        jOK.setText(bundle.getString("NewDevice.jOK.text")); // NOI18N
         jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jOKActionPerformed(evt);
             }
         });
 
-        jCancel.setText("Cancel");
+        jCancel.setText(bundle.getString("NewDevice.jCancel.text")); // NOI18N
         jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCancelActionPerformed(evt);
             }
         });
 
-        jNameLabel.setText("Name: ");
+        jNameLabel.setText(bundle.getString("NewDevice.jNameLabel.text")); // NOI18N
 
-        jname.setText("Name");
+        jname.setText(bundle.getString("NewDevice.jname.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

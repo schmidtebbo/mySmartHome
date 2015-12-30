@@ -104,22 +104,23 @@ public class RuleEditor extends javax.swing.JFrame {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Rule name:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("mysmarthome/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("RuleEditor.jLabel1.text")); // NOI18N
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("IF");
+        jLabel2.setText(bundle.getString("RuleEditor.jLabel2.text")); // NOI18N
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("active:");
+        jLabel3.setText(bundle.getString("RuleEditor.jLabel3.text")); // NOI18N
 
-        jOK.setText("OK");
+        jOK.setText(bundle.getString("RuleEditor.jOK.text")); // NOI18N
         jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jOKActionPerformed(evt);
             }
         });
 
-        jCancel.setText("Cancel");
+        jCancel.setText(bundle.getString("RuleEditor.jCancel.text")); // NOI18N
         jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCancelActionPerformed(evt);
@@ -127,14 +128,14 @@ public class RuleEditor extends javax.swing.JFrame {
         });
 
         jRuleName.setEditable(false);
-        jRuleName.setText("name");
+        jRuleName.setText(bundle.getString("RuleEditor.jRuleName.text")); // NOI18N
 
         buttonGroup1.add(jOff);
-        jOff.setText("off");
+        jOff.setText(bundle.getString("RuleEditor.jOff.text")); // NOI18N
 
         buttonGroup1.add(jOn);
         jOn.setSelected(true);
-        jOn.setText("on");
+        jOn.setText(bundle.getString("RuleEditor.jOn.text")); // NOI18N
 
         jDeviceList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,14 +143,14 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jState.setText("...");
+        jState.setText(bundle.getString("RuleEditor.jState.text")); // NOI18N
         jState.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jStateActionPerformed(evt);
             }
         });
 
-        jDevice.setText("DEVICE");
+        jDevice.setText(bundle.getString("RuleEditor.jDevice.text")); // NOI18N
         jDevice.setEnabled(false);
         jDevice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +158,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jTo.setText("TO");
+        jTo.setText(bundle.getString("RuleEditor.jTo.text")); // NOI18N
         jTo.setEnabled(false);
         jTo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +166,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jAfter.setText("AFTER");
+        jAfter.setText(bundle.getString("RuleEditor.jAfter.text")); // NOI18N
         jAfter.setEnabled(false);
         jAfter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +174,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jTime.setText("Time?");
+        jTime.setText(bundle.getString("RuleEditor.jTime.text")); // NOI18N
         jTime.setEnabled(false);
         jTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +182,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jAnd.setText("AND");
+        jAnd.setText(bundle.getString("RuleEditor.jAnd.text")); // NOI18N
         jAnd.setEnabled(false);
         jAnd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +190,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jOr.setText("OR");
+        jOr.setText(bundle.getString("RuleEditor.jOr.text")); // NOI18N
         jOr.setEnabled(false);
         jOr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +198,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jFor.setText("FOR");
+        jFor.setText(bundle.getString("RuleEditor.jFor.text")); // NOI18N
         jFor.setEnabled(false);
         jFor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +206,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jIS.setText("IS");
+        jIS.setText(bundle.getString("RuleEditor.jIS.text")); // NOI18N
         jIS.setEnabled(false);
         jIS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +228,7 @@ public class RuleEditor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jRuleIF);
 
-        jLabel4.setText("Action:");
+        jLabel4.setText(bundle.getString("RuleEditor.jLabel4.text")); // NOI18N
 
         jAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "switch", "toggle", "program", "dim", "pushover", "pushbullit", "sendmail", "label" }));
         jAction.addActionListener(new java.awt.event.ActionListener() {
@@ -237,9 +238,9 @@ public class RuleEditor extends javax.swing.JFrame {
         });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Device:");
+        jLabel5.setText(bundle.getString("RuleEditor.jLabel5.text")); // NOI18N
 
-        jIN.setText(" ");
+        jIN.setText(bundle.getString("RuleEditor.jIN.text")); // NOI18N
         jIN.setEnabled(false);
         jIN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,7 +248,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jFROM.setText(" ");
+        jFROM.setText(bundle.getString("RuleEditor.jFROM.text")); // NOI18N
         jFROM.setEnabled(false);
         jFROM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,7 +257,7 @@ public class RuleEditor extends javax.swing.JFrame {
         });
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("THEN");
+        jLabel6.setText(bundle.getString("RuleEditor.jLabel6.text")); // NOI18N
 
         jRuleTHEN.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
@@ -278,7 +279,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jAndThen.setText("AND");
+        jAndThen.setText(bundle.getString("RuleEditor.jAndThen.text")); // NOI18N
         jAndThen.setEnabled(false);
         jAndThen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,7 +287,7 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
-        jOrThen.setText("OR");
+        jOrThen.setText(bundle.getString("RuleEditor.jOrThen.text")); // NOI18N
         jOrThen.setEnabled(false);
         jOrThen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

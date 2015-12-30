@@ -56,16 +56,17 @@ public class Settings extends javax.swing.JFrame {
         });
 
         jHeadLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jHeadLabel.setText("Settings");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("mysmarthome/Bundle"); // NOI18N
+        jHeadLabel.setText(bundle.getString("Settings.jHeadLabel.text")); // NOI18N
 
-        jOK.setText("OK");
+        jOK.setText(bundle.getString("Settings.jOK.text")); // NOI18N
         jOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jOKActionPerformed(evt);
             }
         });
 
-        jCancel.setText("Cancel");
+        jCancel.setText(bundle.getString("Settings.jCancel.text")); // NOI18N
         jCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCancelActionPerformed(evt);

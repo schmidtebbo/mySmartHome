@@ -5,6 +5,7 @@
  */
 package mysmarthome;
 
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,15 +21,17 @@ public class JHelp extends javax.swing.JFrame {
     private final int showFile;
     public String strShowString = null;
     String strAktKonf = null;
+    myHome myParent;
 
     /**
      * Creates new form JHelp
      */
-    public JHelp(int i) {
+    public JHelp(int i, myHome aThis) {
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
         initComponents();
         this.showFile = i;
+        myParent = aThis;
         setVisible(true);
     }
 
@@ -146,10 +149,12 @@ public class JHelp extends javax.swing.JFrame {
                 jHelpText.setText("mySmartHome.hlp not found.\n");
             }
         }
+    Dimension preferredSize = this.getPreferredSize();
+    this.setBounds(myParent.getBounds().x + 10, myParent.getBounds().y + 10, preferredSize.width, preferredSize.height);
     }//GEN-LAST:event_formWindowOpened
 
     private void jEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditActionPerformed
-        new Config(strAktKonf).setVisible(true);
+        new Config(strAktKonf, this).setVisible(true);
     }//GEN-LAST:event_jEditActionPerformed
 
     /**
@@ -182,7 +187,7 @@ public class JHelp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JHelp(0).setVisible(true);
+                new JHelp(0,null).setVisible(true);
             }
         });
     }
