@@ -1,0 +1,11 @@
+Help file for the config editor 
+
+only very little help at this moment:
+
+Double click on an entry in the gui list or device list, if you want to edit it.
+Double click on an entry in the rules editor to edit the rule.
+If you want to integrate a new protokoll or device, you can create a file that 
+consists the json element. All values that can be edited must be \s for strings,
+\i for integers and \f for floats. For examples see the protocol files in the 
+"Template" directory.
+

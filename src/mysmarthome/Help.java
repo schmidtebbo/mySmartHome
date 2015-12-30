@@ -96,7 +96,7 @@ public class Help extends javax.swing.JFrame {
         char ac[] = new char[10001];
         int n;
         
-        String str = "/piconfig.txt";
+        String str = "piconfig.txt";
         Class c = getClass();
         is = c.getResourceAsStream (str);
         if( is != null)
