@@ -1711,7 +1711,7 @@ public class myHome extends javax.swing.JFrame {
 
                 @Override 
                 public void actionPerformed(ActionEvent e) {
-                    // this is a 2 seconds timer
+                    // this is a 12 seconds timer
                     if(bHeartSent)
                     {
                         JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("lostConnection"));
