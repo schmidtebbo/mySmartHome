@@ -603,7 +603,7 @@ public class RuleEditor extends javax.swing.JFrame {
             for (String DevArr1 : DevArr) {
                 s += DevArr1 + "\n";
             }
-            indexOf = s.indexOf(str.substring(1, str.length())) + str.length();
+            indexOf = s.indexOf(str.substring(1, str.length()) + "*") + str.length();
             s = s.substring(indexOf);
             s = s.substring(s.indexOf("\n")+1);
             indexOf = s.indexOf("*");
@@ -685,16 +685,24 @@ public class RuleEditor extends javax.swing.JFrame {
         String str;
         if(DevArr != null)
         {
-            if(DevArr[0].contains("%="))
+            if(DevArr[0].contains("%=") || DevArr[0].contains("%f") || DevArr[0].contains("%d"))
             {
                 str = "==,!=,>,>=,<,<=";
                 DevArr = str.split(",");
+                str = (String) JOptionPane.showInputDialog(this, "Available values", "Select a value", JOptionPane.QUESTION_MESSAGE, null, DevArr, DevArr[0]);
+                if(str == null)
+                    str = "";
+                jRuleIF.setText(jRuleIF.getText().substring(0, caretPosition) + str + " " + jRuleIF.getText().substring(caretPosition, jRuleIF.getText().length()));
+                jRuleIF.setCaretPosition(caretPosition + str.length() + 1);
             }
-            str = (String) JOptionPane.showInputDialog(this, "Available values", "Select a value", JOptionPane.QUESTION_MESSAGE, null, DevArr, DevArr[0]);
-            if(str == null)
-                str = "";
-            jRuleIF.setText(jRuleIF.getText().substring(0, caretPosition) + str + " " + jRuleIF.getText().substring(caretPosition, jRuleIF.getText().length()));
-            jRuleIF.setCaretPosition(caretPosition + str.length() + 1);
+            else
+            {
+                str = (String) JOptionPane.showInputDialog(this, "Available values", "Select a value", JOptionPane.QUESTION_MESSAGE, null, DevArr, DevArr[0]);
+                if(str == null)
+                    str = "";
+                jRuleIF.setText(jRuleIF.getText().substring(0, caretPosition) + " IS " + str + jRuleIF.getText().substring(caretPosition, jRuleIF.getText().length()));
+                jRuleIF.setCaretPosition(caretPosition + str.length() + 4);
+            }
         }
         else
         {
