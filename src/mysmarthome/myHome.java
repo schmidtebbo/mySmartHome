@@ -1707,18 +1707,18 @@ public class myHome extends javax.swing.JFrame {
                 Logger.getLogger(myHome.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            Timer timer = new Timer(6000, new java.awt.event.ActionListener() {
+            Timer timer = new Timer(12000, new java.awt.event.ActionListener() {
 
                 @Override 
                 public void actionPerformed(ActionEvent e) {
-                    // this is a 6 seconds timer
+                    // this is a 2 seconds timer
                     if(bHeartSent)
                     {
                         JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("lostConnection"));
                         System.exit(0);
                     }
                     int i = 0;
-                    if((i++ % 10) == 0)
+                    if((i++ % 5) == 0)
                     {   //every minute...
                         Date date = new Date();
                         String format = sdf.format(date);
