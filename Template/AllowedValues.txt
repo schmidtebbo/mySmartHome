@@ -17,17 +17,17 @@ disconnected
 
 [datetime]
 *year*
-%d
+%=
 *month*
-%d
+%=
 *day*
-%d
+%=
 *hour*
-%d
+%=
 *minute*
-%d
+%=
 *second*
-%d
+%=
 *weekday*
 %d
 

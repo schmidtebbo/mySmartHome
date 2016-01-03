@@ -836,6 +836,7 @@ public class Config extends javax.swing.JFrame {
             strSettings = strSettings.replace("\n", "\n\t\t");
             i = strSettings.lastIndexOf("},");
             strSettings = strSettings.substring(0, i);
+            strSettings = strSettings.replace("\":", "\": ");
             DeviceList = new ArrayList<>();
             Temp = dev[0].split("},");
             i = Temp[Temp.length-2].lastIndexOf('}');
@@ -915,6 +916,9 @@ public class Config extends javax.swing.JFrame {
             i = gui[1].indexOf("{");
             gui[1] = gui[1].substring(i+1, gui[1].length());
             Temp = gui[1].split("settings");
+            Temp[0] = Temp[0].replace("\":", "\": ");
+            Temp[0] = Temp[0].replace("[", "[ ");
+            Temp[0] = Temp[0].replace("]", " ]");
             Temp = Temp[0].split("},");
             i = Temp[Temp.length-2].lastIndexOf('}');
             if(i != -1)

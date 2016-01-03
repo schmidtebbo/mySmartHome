@@ -282,12 +282,16 @@ public class GuiEditor extends javax.swing.JFrame {
         i = strGuiElement.indexOf("name");
         str = strGuiElement.substring(i+8, strGuiElement.length());
         i = str.indexOf("\n");
-        str = str.substring(0,i-2);
+        str = str.substring(0,i);
+        i = str.lastIndexOf("\"");
+        str = str.substring(0,i);
         jNameText.setText(str);
         i = strGuiElement.indexOf("group");
         str = strGuiElement.substring(i+11, strGuiElement.length());
         i = str.indexOf("\n");
-        str = str.substring(0,i-4);
+        str = str.substring(0,i);
+        i = str.lastIndexOf("\"");
+        str = str.substring(0,i);
         jGroupText.setText(str);
         i = strGuiElement.indexOf("media");
         str = strGuiElement.substring(i+11, strGuiElement.length());

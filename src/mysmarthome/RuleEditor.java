@@ -456,17 +456,17 @@ public class RuleEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jCancelActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-         byte[] b;
+        byte[] b;
         strAllowedValues = "\n";
         try {
-            FileInputStream fileInputStream = new FileInputStream(gsConfigDirectory + "AllowedValues.txt");
-            File f = new File(gsConfigDirectory + "AllowedValues.txt");
+            FileInputStream fileInputStream = new FileInputStream(gsConfigDirectory + "Template/AllowedValues.txt");
+            File f = new File(gsConfigDirectory + "Template/AllowedValues.txt");
             long l = f.length();
             b = new byte[(int)l];
             fileInputStream.read(b);
             strAllowedValues = new String(b);
         } catch (FileNotFoundException ex) {
-            File f = new File(Config.gsConfigDirectory + "AllowedValues.txt");
+            File f = new File(Config.gsConfigDirectory + "Template/AllowedValues.txt");
         } catch (IOException ex) {
             Logger.getLogger(RuleEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -685,16 +685,25 @@ public class RuleEditor extends javax.swing.JFrame {
         String str;
         if(DevArr != null)
         {
+            if(DevArr[0].contains("%="))
+            {
+                str = "==,!=,>,>=,<,<=";
+                DevArr = str.split(",");
+            }
             str = (String) JOptionPane.showInputDialog(this, "Available values", "Select a value", JOptionPane.QUESTION_MESSAGE, null, DevArr, DevArr[0]);
+            if(str == null)
+                str = "";
+            jRuleIF.setText(jRuleIF.getText().substring(0, caretPosition) + str + " " + jRuleIF.getText().substring(caretPosition, jRuleIF.getText().length()));
+            jRuleIF.setCaretPosition(caretPosition + str.length() + 1);
         }
         else
         {
             str = (String) JOptionPane.showInputDialog(this, "Defaults", "Select a default value", JOptionPane.QUESTION_MESSAGE, null, def_vals, def_vals[0]);
+            if(str == null)
+                str = "";
+            jRuleIF.setText(jRuleIF.getText().substring(0, caretPosition) + " IS " + str + jRuleIF.getText().substring(caretPosition, jRuleIF.getText().length()));
+            jRuleIF.setCaretPosition(caretPosition + " IS ".length() + str.length());
         }
-        if(str == null)
-            str = "";
-        jRuleIF.setText(jRuleIF.getText().substring(0, caretPosition) + " IS " + str + jRuleIF.getText().substring(caretPosition, jRuleIF.getText().length()));
-        jRuleIF.setCaretPosition(caretPosition + " IS ".length() + str.length());
         jRuleIF.requestFocus();
     }//GEN-LAST:event_jISActionPerformed
 
