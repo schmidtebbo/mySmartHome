@@ -515,12 +515,43 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jNewDeviceActionPerformed
 
     private void jSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaveActionPerformed
+        String str1;
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileInputStream(gsConfigFilename));
+        } catch (FileNotFoundException ex) {
+            File f = new File(Config.gsConfigDirectory);
+            Boolean b = f.mkdir();
+            try {
+                f = new File(gsConfigFilename);
+                f.createNewFile();
+                prop.store(new FileOutputStream(Config.gsConfigFilename), Config.gsConfigComment);
+                prop.setProperty("DefDir", System.getProperty("user.name"));
+            } catch (FileNotFoundException ex1) {
+                try {
+                    prop.setProperty("DefDir", System.getProperty("user.name"));
+                    prop.store(new FileOutputStream(Config.gsConfigFilename), Config.gsConfigComment);
+                } catch (IOException ex2) {
+                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex2);
+                }
+            } catch (IOException ex1) {
+                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        str1 = prop.getProperty("DefDir");
+        if(str1 == null)
+            str1 = System.getProperty("user.name");
         JFileChooser fs = new JFileChooser();
-        if(LastSelectedFile != null)
-            fs.setCurrentDirectory(LastSelectedFile);
+        File curDir = new File(str1);       
+        fs.setCurrentDirectory(curDir);
         FileFilter filter = new FileNameExtensionFilter("JSON file", "json");
         fs.addChoosableFileFilter(filter);
         fs.setAcceptAllFileFilterUsed(true);
+        if(LastSelectedFile != null)
+            fs.setCurrentDirectory(LastSelectedFile);
         int ret = fs.showSaveDialog(this);
         if(ret == javax.swing.JFileChooser.APPROVE_OPTION)
         {
@@ -571,6 +602,7 @@ public class Config extends javax.swing.JFrame {
             
             File f = fs.getSelectedFile();
             String file_name = f.toString( );
+            LastSelectedFile = f;
             if(!file_name.contains(".json"))
                 file_name += ".json";
             try {
@@ -863,19 +895,21 @@ public class Config extends javax.swing.JFrame {
         this.setBounds(bounds);
         if(strAktKonfiguration != null)
         {
-            String str = strAktKonfiguration;
+            int i = strAktKonfiguration.indexOf("}}}}");
+            String str = strAktKonfiguration.substring(0, i + 5);
             bAktKonf = true;
         
-            int i = str.indexOf("ces\":{");
+            i = str.indexOf("ces\":{");
             str = str.substring(i+6, str.length());
             str = str.replaceAll("\n\n", "\n");
             str = str.replaceAll("\n", "\t\n");
             String[] dev = str.split("rules\":");    //dev[0] contains all devices...
             strDevices = dev[0].substring(1, dev[0].lastIndexOf("}")+1);
             String[] gui = dev[1].split("gui\":");   //gui[0] contains the rules, gui[1] contains the gui elements and settings
-            strRules = gui[0].substring(0, gui[0].length());
+            strRules = gui[0]; //.substring(0, gui[0].length());
             i = strRules.indexOf("{");
             strRules = strRules.substring(i+1, strRules.length());  //strip leading {
+            strRules = strRules.replace("\":", "\": ");
             String[] Temp = gui[1].split("settings\":");
             i = Temp[0].indexOf("{");
             strGUI = Temp[0].substring(i+1, Temp[0].lastIndexOf("}")+1);
@@ -884,10 +918,12 @@ public class Config extends javax.swing.JFrame {
             strSettings = strSettings.replace("{", "{\n\t\t");
             strSettings = strSettings.replace("}", "\n}");
             strSettings = strSettings.replace("\n", "\n\t\t");
-            i = strSettings.lastIndexOf("},");
-            strSettings = strSettings.substring(0, i);
+//            i = strSettings.lastIndexOf("},");
+//            strSettings = strSettings.substring(0, i);
             strSettings = strSettings.replace("\":", "\": ");
+            strSettings = strSettings.substring(0, strSettings.length()-2);
             DeviceList = new ArrayList<>();
+            dev[0] = dev[0].replace("\":", "\": ");
             Temp = dev[0].split("},");
             i = Temp[Temp.length-2].lastIndexOf('}');
             if(i != -1)

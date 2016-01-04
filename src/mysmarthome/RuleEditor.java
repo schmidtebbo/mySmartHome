@@ -214,6 +214,11 @@ public class RuleEditor extends javax.swing.JFrame {
             }
         });
 
+        jRuleIF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRuleIFMouseClicked(evt);
+            }
+        });
         jRuleIF.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -259,6 +264,11 @@ public class RuleEditor extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText(bundle.getString("RuleEditor.jLabel6.text")); // NOI18N
 
+        jRuleTHEN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRuleTHENMouseClicked(evt);
+            }
+        });
         jRuleTHEN.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -987,6 +997,21 @@ public class RuleEditor extends javax.swing.JFrame {
         jRuleTHEN.setCaretPosition(caretPosition + " OR ".length());
         jRuleTHEN.requestFocus();
     }//GEN-LAST:event_jOrThenActionPerformed
+
+    private void jRuleIFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRuleIFMouseClicked
+        jIS.setEnabled(true);
+        jAnd.setEnabled(true);
+        jOr.setEnabled(true);
+    }//GEN-LAST:event_jRuleIFMouseClicked
+
+    private void jRuleTHENMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRuleTHENMouseClicked
+        jFor.setEnabled(true);
+        jAfter.setEnabled(true);
+        jTo.setEnabled(true);
+        jTime.setEnabled(true);
+        jAndThen.setEnabled(true);
+        jOrThen.setEnabled(true);
+    }//GEN-LAST:event_jRuleTHENMouseClicked
 
     /**
      * @param args the command line arguments
