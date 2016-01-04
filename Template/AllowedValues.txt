@@ -97,6 +97,19 @@ off
 on
 off
 
+[openweathermap]
+*humidity*
+%f
+*temperature*
+%f
+*sunrise*
+%f
+*sunset*
+%f
+*sun*
+set
+rise
+
 [ping]
 *state*
 connected

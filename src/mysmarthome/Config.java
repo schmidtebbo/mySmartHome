@@ -550,7 +550,7 @@ public class Config extends javax.swing.JFrame {
         FileFilter filter = new FileNameExtensionFilter("JSON file", "json");
         fs.addChoosableFileFilter(filter);
         fs.setAcceptAllFileFilterUsed(true);
-        if(LastSelectedFile != null)
+        if(LastSelectedFile != null) 
             fs.setCurrentDirectory(LastSelectedFile);
         int ret = fs.showSaveDialog(this);
         if(ret == javax.swing.JFileChooser.APPROVE_OPTION)
