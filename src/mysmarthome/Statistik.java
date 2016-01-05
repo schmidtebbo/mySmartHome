@@ -60,14 +60,28 @@ public class Statistik extends javax.swing.JFrame {
         
         if(iVal != null)
         {
+            int xMax = -100, yMax = -100;
+            int xMin = 100, yMin = 100;
+            
             for(int i = 0; i < iVal.length-1; i++)
             {
                 int x1 = iVal[iVal.length - 1 -i];
-                
+                if(x1 < xMin)
+                {
+                    xMin = x1;
+                    yMin = i;
+                }
+                if(x1 > xMax)
+                {
+                    xMax = x1;
+                    yMax = i;
+                }
                 int x2 = iVal[iVal.length - 2 - i];
                 
                 g.drawLine(850 - i*8, 250 - x1*4, 850 - (i+1)*8, 250 - x2*4);
             }
+            g.drawLine(850 - yMin*8, 250 - xMin*4, 850 - yMin*8, 240 - xMin*4);
+            g.drawLine(850 - yMax*8, 250 - xMax*4, 850 - yMax*8, 240 - xMax*4);
         }
     }
     /**
