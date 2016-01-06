@@ -5,6 +5,7 @@
  */
 package mysmarthome;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
@@ -38,19 +39,30 @@ public class Statistik extends javax.swing.JFrame {
         g.drawLine(50, 330, 850, 330);
         for( int i = 1; i < 100; i++)
         {
+            if((i%20) == 0)
+            {
+                g.setColor(Color.LIGHT_GRAY);
+                g.drawLine(50 + 8*i, 325, 50 + 8*i, 50);
+                g.setColor(Color.black);
+                g.drawString(""+i, 42 + 8*i, 350);
+            }
             g.drawLine(50 + 8*i, 325, 50 + 8*i, 335);
         }
         g.drawString(strToday, 820, 350);
-        g.drawString("20", 670, 350);
-        g.drawString("40", 510, 350);
-        g.drawString("60", 370, 350);
-        g.drawString("80", 210, 350);
         g.drawString(str100days, 10, 350);
         for( int i = 0; i < 70; i += 5)
         {
+            if((i%10) == 0)
+            {
+                g.setColor(Color.LIGHT_GRAY);
+                g.drawLine(45, 50 + i*4, 850, 50 + i*4);
+                g.setColor(Color.black);
+            }
             g.drawLine(45, 50 + i*4, 55, 50 + i*4);
         }
+        g.setColor(Color.LIGHT_GRAY);
         g.drawLine(50, 250, 850, 250);
+        g.setColor(Color.black);
         g.drawString("0°C", 20, 255);
         g.drawString("-10°C", 10, 295);
         g.drawString("10°C", 15, 215);
@@ -80,8 +92,13 @@ public class Statistik extends javax.swing.JFrame {
                 
                 g.drawLine(850 - i*8, 250 - x1*4, 850 - (i+1)*8, 250 - x2*4);
             }
+            g.setColor(Color.red);
             g.drawLine(850 - yMin*8, 250 - xMin*4, 850 - yMin*8, 240 - xMin*4);
+            g.drawString(""+xMin, 840 - yMin*8, 238 - xMin*4);
+            g.setColor(Color.green);
             g.drawLine(850 - yMax*8, 250 - xMax*4, 850 - yMax*8, 240 - xMax*4);
+            g.drawString(""+xMax, 840 - yMax*8, 238 - xMax*4);
+            g.setColor(Color.black);
         }
     }
     /**
