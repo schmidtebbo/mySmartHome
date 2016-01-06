@@ -18,6 +18,8 @@ public class Statistik extends javax.swing.JFrame {
     public byte[] iVal = null;
     String strToday;
     String str100days;
+    boolean bShowTemp = false;
+    int MouseX, MouseY;
     
     /**
      * Creates new form Statistik
@@ -35,6 +37,7 @@ public class Statistik extends javax.swing.JFrame {
     @Override
     public void paint(Graphics g)
     {
+        super.paint(g);
         g.drawLine(50, 50, 50, 330);
         g.drawLine(50, 330, 850, 330);
         for( int i = 1; i < 100; i++)
@@ -99,6 +102,11 @@ public class Statistik extends javax.swing.JFrame {
             g.drawLine(850 - yMax*8, 250 - xMax*4, 850 - yMax*8, 240 - xMax*4);
             g.drawString(""+xMax, 840 - yMax*8, 238 - xMax*4);
             g.setColor(Color.black);
+            if(bShowTemp)
+            {
+                int x = (MouseX - 50)/8;
+                g.drawString(""+iVal[x], MouseX, MouseY);
+            }
         }
     }
     /**
@@ -111,6 +119,16 @@ public class Statistik extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -143,6 +161,19 @@ public class Statistik extends javax.swing.JFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentShown
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        bShowTemp = !bShowTemp;
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        if(bShowTemp)
+        {
+            MouseX = evt.getX();
+            MouseY = evt.getY();
+            this.repaint();
+        }
+    }//GEN-LAST:event_formMouseMoved
 
     /**
      * @param args the command line arguments
