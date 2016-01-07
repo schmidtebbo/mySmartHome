@@ -25,6 +25,8 @@ public class JHelp extends javax.swing.JFrame {
 
     /**
      * Creates new form JHelp
+     * @param i
+     * @param aThis
      */
     public JHelp(int i, myHome aThis) {
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
@@ -115,14 +117,15 @@ public class JHelp extends javax.swing.JFrame {
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        InputStream is = null;
-        BufferedReader br = null;
+        InputStream is;
+        BufferedReader br;
         int bytesRead = 0 ;
         char ac[] = new char[10001];
         int n;
         
         if(showFile == 0)
         {
+            jEdit.setEnabled(false);
             Class c = getClass();
             is = c.getResourceAsStream ("mySmartHome.hlp");
             if( is != null)

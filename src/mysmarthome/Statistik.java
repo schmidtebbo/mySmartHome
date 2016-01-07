@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 public class Statistik extends javax.swing.JFrame {
 
     public byte[] iVal = null;
+    public String parentTemp = "";
     String strToday;
     String str100days;
     boolean bShowTemp = false;
@@ -105,7 +106,8 @@ public class Statistik extends javax.swing.JFrame {
             if(bShowTemp)
             {
                 int x = (MouseX - 50)/8;
-                g.drawString(""+iVal[x], MouseX, MouseY);
+                if(x >= 0 && x < 100)
+                    g.drawString(""+iVal[x], MouseX, MouseY);
             }
         }
     }
@@ -156,6 +158,7 @@ public class Statistik extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setTitle("Temperature statistics: " + parentTemp);
     }//GEN-LAST:event_formWindowOpened
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -164,6 +167,12 @@ public class Statistik extends javax.swing.JFrame {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         bShowTemp = !bShowTemp;
+        if(bShowTemp)
+        {
+            MouseX = evt.getX();
+            MouseY = evt.getY();
+            this.repaint();
+        }
     }//GEN-LAST:event_formMouseClicked
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved

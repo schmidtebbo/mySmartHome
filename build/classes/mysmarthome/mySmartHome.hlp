@@ -1,8 +1,6 @@
 Help-File for "mySmartHome", a GUI for pilight.
 This program depends on java, so you must have the latest jre installed.
 
-This program is in a very early state!
-
 Deutsche Hilfe nach der englischen.
 
 At launch time the program searches for the pilight deamon. If it was found, the configuration 
@@ -31,33 +29,43 @@ of the dimmer) are the real states and values, which sends the deamon back.
 Kurzanleitung 
 
 Beim Start des Programms wird im Netzwerk ein pilight-daemon gesucht. 
-Wird er gefunden (ein kleiner roter Dämon wird rechts unten angezeigt), wird die Konfiguration 
-ausgelesen und im Programm angelegt. 
+Wird er gefunden (ein kleiner roter Dämon oder ein eigenes Bild wird rechts unten angezeigt), 
+wird die Konfiguration ausgelesen und im Programm angelegt. 
 Für jede Gruppe wird ein "Raum" angelegt, der in der Übersicht als kleines Icon 
-(Vorschau) erscheint.
-Beim ersten Aufruf wird dafür ein "Default-Bild" verwendet. Beim Klick auf das Bild
-oder den entsprechenden Reiter wird der "Raum" geöffnet. Hier ist das Bild als 
-Hintergrund hinterlegt. Die GUI-Elemente sind hier am linken Rand aufgeführt.
+(Vorschau) erscheint. Wenn kein Bild für den Raum vorhanden ist, wird dafür ein "Default-Bild" verwendet. 
+Beim Klick auf das Bild oder den entsprechenden Reiter wird der "Raum" geöffnet. Hier ist das Bild als 
+Hintergrund hinterlegt. Die GUI-Elemente sind erst mal am linken Rand aufgeführt.
 Man kann sie verschieben, indem man das Feld mit dem GUI-Namen mit der Maus (bei gedrückter
 linker Maustaste) zum gewünschten Platz zieht.
+
 Beim Verlassen des Programms wird im Heim-Verzeichnis des Users ein Ordner "mySmartHome"
-angelegt, der eine Datei "myProps" enthält. Hier sind die letzten Einstellungen wie 
-Position des Programms auf dem Bildschirm oder die Lage der GUI-Elemente in den 
+angelegt, der eine Datei "myProps" enthält, wenn das Verzeichnis noch nicht existiert. Hier sind die letzten 
+Einstellungen wie Position des Programms auf dem Bildschirm oder die Lage der GUI-Elemente in den 
 Fenstern hinterlegt.
 Wenn in diesem Ordner ein jpg-Bild mit dem Namen eines Raums abgelegt wird, wird dieses 
 Bild als Bild für die Vorschau genommen. Die Größe muss 120x90 Pixel betragen.
 Wird ein Bild mit dem Raumnamen und "_big.jpg" gefunden, wird dieses Bild als Hintergrund
-für den Raum genommen. Die Größe muss hier 972x493 Pixel betragen.
+für den Raum genommen. Die Größe muss hier 972x493 Pixel oder größer betragen.
+
 Wird in diesem Ordner ein Bild für ein "switch", "contact" oder "relay" abgelegt, wird dieses 
 angezeigt (*_on.jpg für eingeschaltet und *_off.jpg für aus).
 Wird ein Bild mit dem Namen eines "label" mit Endung "_1.jpg" bis "_9.jpg" hier abgelegt, wird 
 dies Bild angezeigt, wenn in das Objekt der Name des Bildes geschrieben wird. Ansonsten wird 
 der Text geschrieben.
+
 Ein Dimmer besteht aus einem Slider und einer darüber liegenden Balken-Anzeige. Mit einfachem 
 Klick auf den Slider wird der Dimmer aus und eingeschaltet. Die Anzeige wird entsprechend
 sichtbar oder unsichtbar geschaltet.
+
 Der Status aller switches oder Labes und Dimmer sind die wirklichen Werte, die der Dämon als Bestätigung
 an dasProgramm zurück geschickt hat.
+
+Klickt man auf eine Temperatur-Anzeige öffnet sich ein Fenster mit einer Statistik. Dort wird grafisch die 
+Temperatur der letzten 100 Tage dar gestellt. Mit einem Klick in die Grafik, erscheint am Maus-Zeiger der 
+Temperatur-Wert des Tages, wo der Zeiger steht. Ein weiterer Klick schaltet das wieder aus.
+
+Wird der Knopf Konfiguration angeklickt, öffnet sich ein Fenster mit der gerade laufenden Konfiguration. Mit 
+einem Klick auf "Edit", gelangt man zum Konfigurations Editor.
 
 ******----------------------------------------------------------------------------------------------------******
 
@@ -73,7 +81,8 @@ Ustawienia programu są przechowywane w katalogu domowym użytkownika /"mySmartH
 Jeśli ten katalog nie istnieje, zostanie utworzony przy pierwszym uruchomieniu.
 Jeśli umieścisz w tym katalogu plik jpg z nazwą pokoju, będzie on widoczny w panelu Overwiev. Wymiary (120x90). 
 Jeśli umieścisz plik jpg z nazwą pokoju z końcówką "_big.jpg" będzie on tłem dla twojego pokoju. Wymiary (972x493).
-Jeśli umieścisz plik jpg z nazwą urządzenia typu "przełącznik", "kontakt" lub "relay", z końcówką _on lub _off będzie on wyświetlany jako twoje urządzenie.
+Jeśli umieścisz plik jpg z nazwą urządzenia typu "przełącznik", "kontakt" lub "relay", z końcówką _on lub _off 
+będzie on wyświetlany jako twoje urządzenie.
 Jeśli masz etykietę, to pokaże napisać tekst lub obraz do Jeśli wpisać nazwę urządzenia z
 etykiety i kończy się "_1.jpg" do "_9.jpg".
 Jest ściemniacza suwak oraz pasek postępu. Z jednej kliknij na suwak, można przełączyć

@@ -350,7 +350,7 @@ public class myHome extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jDaemon.setIcon(new ImageIcon(IIDaemon_aus.getImage().getScaledInstance(jDaemon.getBounds().width, jDaemon.getBounds().height, Image.SCALE_DEFAULT)));
-
+        this.setTitle("mySmartHome");
         String line;
         DatagramSocket ssdp;
 
@@ -901,6 +901,7 @@ public class myHome extends javax.swing.JFrame {
                                                         public void actionPerformed(ActionEvent e) {
                                                             Statistik statistik = new Statistik();
                                                             statistik.iVal = d.nTemperature;
+                                                            statistik.parentTemp = d.getGUIName();
                                                             statistik.setVisible(true);
                                                         }
                                                     });
