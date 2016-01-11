@@ -405,7 +405,7 @@ public class myHome extends javax.swing.JFrame {
                                                 } catch(SocketTimeoutException e) {
                                                 } catch(IOException e) {
                                                         String s =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("nopilightfound");
-                                                        JOptionPane.showMessageDialog(null, s);
+                                                        JOptionPane.showMessageDialog(rootPane, s);
                                                         ssdp.close();
                                                         System.exit(0);
                                                 }
@@ -420,15 +420,24 @@ public class myHome extends javax.swing.JFrame {
 		if(server == null || port == 0) {
                 try {
                     String s =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("nopilightfound") + java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("tryAgain");
-                    if(tryAgain == 1) JOptionPane.showMessageDialog(null, s);
+                    if(tryAgain == 1) JOptionPane.showMessageDialog(rootPane, s);
                     if(tryAgain == 2)
                     {
                         s =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("noanswer");
-                        JOptionPane.showMessageDialog(null, s);
-                        System.exit(0);
+//                        JOptionPane.showMessageDialog(null, s);
+                        String[] sa = new String[2];
+                        sa[0] = "Config Editor";
+                        sa[1] = "Exit";
+                        int showOptionDialog = JOptionPane.showOptionDialog(rootPane, s, null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                        if(showOptionDialog == JOptionPane.YES_OPTION)
+                        {
+                            new Config(null, null).setVisible(true);
+                            return;
+                        }
+                       System.exit(0);
                     }
                     Thread.sleep(200);
-                    tryAgain = 2;
+                    if(tryAgain < 3) tryAgain++;
                 } catch (InterruptedException ex) {
                         Logger.getLogger(myHome.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1694,14 +1703,14 @@ public class myHome extends javax.swing.JFrame {
                     else
                     {
                         s =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("contactfailed");
-                        JOptionPane.showMessageDialog(null, s);
+                        JOptionPane.showMessageDialog(rootPane, s);
                         System.exit(0);
                     }
                 }
                 else
                 {
                     s =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("contactfailed");
-                    JOptionPane.showMessageDialog(null, s);
+                    JOptionPane.showMessageDialog(rootPane, s);
                     System.exit(0);
                 }
             } catch (IOException | InterruptedException ex) {
@@ -1715,7 +1724,7 @@ public class myHome extends javax.swing.JFrame {
                     // this is a 12 seconds timer
                     if(bHeartSent)
                     {
-                        JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("lostConnection"));
+                        JOptionPane.showMessageDialog(rootPane, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("lostConnection"));
                         System.exit(0);
                     }
                     int i = 0;
@@ -2050,7 +2059,7 @@ public class myHome extends javax.swing.JFrame {
         {
             bMustShow = true;
             String s = java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("overview");
-            JOptionPane.showMessageDialog(null, s);
+            JOptionPane.showMessageDialog(rootPane, s);
         }
         else
         {

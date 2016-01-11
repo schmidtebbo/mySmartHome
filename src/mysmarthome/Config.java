@@ -76,53 +76,56 @@ public class Config extends javax.swing.JFrame {
         this.strAktKonfiguration = strAktKonf;
         int i = 0;
         String s = "";
-        while(true)
-        {    
-            i = strAktKonfiguration.indexOf("(");
-            if(i == -1)
-            {
-                s += strAktKonfiguration;
-                strAktKonfiguration = s;
-                break;
+        if(strAktKonfiguration != null)
+        {
+            while(true)
+            {    
+                i = strAktKonfiguration.indexOf("(");
+                if(i == -1)
+                {
+                    s += strAktKonfiguration;
+                    strAktKonfiguration = s;
+                    break;
+                }
+                s += strAktKonfiguration.substring(0, i);
+                strAktKonfiguration = strAktKonfiguration.substring(i);
+                i = strAktKonfiguration.indexOf(")");
+                String str = strAktKonfiguration.substring(0, i);
+                if(str.contains("\n"))
+                {
+                    str = str.replace("\n", "");
+                }
+                if(str.contains("\t"))
+                {
+                    str = str.replace("\t", "");
+                }
+                s += str;
+                strAktKonfiguration = strAktKonfiguration.substring(i, strAktKonfiguration.length());
             }
-            s += strAktKonfiguration.substring(0, i);
-            strAktKonfiguration = strAktKonfiguration.substring(i);
-            i = strAktKonfiguration.indexOf(")");
-            String str = strAktKonfiguration.substring(0, i);
-            if(str.contains("\n"))
-            {
-                str = str.replace("\n", "");
+            while(true)
+            {    
+                i = strAktKonfiguration.indexOf("[");
+                if(i == -1)
+                {
+                    s += strAktKonfiguration;
+                    strAktKonfiguration = s;
+                    break;
+                }
+                s += strAktKonfiguration.substring(0, i);
+                strAktKonfiguration = strAktKonfiguration.substring(i);
+                i = strAktKonfiguration.indexOf("]");
+                String str = strAktKonfiguration.substring(0, i);
+                if(str.contains("\n"))
+                {
+                    str = str.replace("\n", "");
+                }
+                if(str.contains("\t"))
+                {
+                    str = str.replace("\t", "");
+                }
+                s += str;
+                strAktKonfiguration = strAktKonfiguration.substring(i, strAktKonfiguration.length());
             }
-            if(str.contains("\t"))
-            {
-                str = str.replace("\t", "");
-            }
-            s += str;
-            strAktKonfiguration = strAktKonfiguration.substring(i, strAktKonfiguration.length());
-        }
-        while(true)
-        {    
-            i = strAktKonfiguration.indexOf("[");
-            if(i == -1)
-            {
-                s += strAktKonfiguration;
-                strAktKonfiguration = s;
-                break;
-            }
-            s += strAktKonfiguration.substring(0, i);
-            strAktKonfiguration = strAktKonfiguration.substring(i);
-            i = strAktKonfiguration.indexOf("]");
-            String str = strAktKonfiguration.substring(0, i);
-            if(str.contains("\n"))
-            {
-                str = str.replace("\n", "");
-            }
-            if(str.contains("\t"))
-            {
-                str = str.replace("\t", "");
-            }
-            s += str;
-            strAktKonfiguration = strAktKonfiguration.substring(i, strAktKonfiguration.length());
         }
         this.cbuf = null;
         this.LastSelectedFile = null;
@@ -509,7 +512,7 @@ public class Config extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "File has the wrong extension!");
+                JOptionPane.showMessageDialog(rootPane, "File has the wrong extension!");
             }
         }
     }//GEN-LAST:event_jNewDeviceActionPerformed
@@ -619,7 +622,7 @@ public class Config extends javax.swing.JFrame {
                 bw.close();
                 fw.close();
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Problems to write file. File was not written!");
+                JOptionPane.showMessageDialog(rootPane, "Problems to write file. File was not written!");
             }
         }
     }//GEN-LAST:event_jSaveActionPerformed
@@ -700,7 +703,7 @@ public class Config extends javax.swing.JFrame {
                     String str = new String(cbuf);
                     if(!str.contains("pilight"))
                     {
-                        JOptionPane.showMessageDialog(null, "wrong file selected");
+                        JOptionPane.showMessageDialog(rootPane, "wrong file selected");
                         return;
                     }
                     int i = str.indexOf(":");
@@ -794,7 +797,7 @@ public class Config extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Problems opening the file");
+                JOptionPane.showMessageDialog(rootPane, "Problems opening the file");
             }
         }
     }//GEN-LAST:event_jLoadActionPerformed
@@ -887,7 +890,8 @@ public class Config extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String s = prop.getProperty("pilightConf",""+(myParent.getBounds().x + 10)+";"+(myParent.getBounds().y + 10));
+        String s = "";
+        prop.getProperty("pilightConf",s + (rootPane.getBounds().x + 10)+";"+(rootPane.getBounds().y + 10));
         String strBounds[] = s.split(";");
         Rectangle bounds = this.getBounds();
         bounds.x = Integer.parseInt(strBounds[0]);
@@ -1064,7 +1068,7 @@ public class Config extends javax.swing.JFrame {
             str = str.substring(4, str.indexOf(":")-1);
             if(get.contains(str))
             {
-                JOptionPane.showMessageDialog(null, "Entry exists!");
+                JOptionPane.showMessageDialog(rootPane, "Entry exists!");
                 return;
             }
         }

@@ -8,7 +8,6 @@ package mysmarthome;
 import java.awt.Dimension;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *

@@ -133,7 +133,7 @@ public class NewDevice extends javax.swing.JFrame {
     private void jOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOKActionPerformed
         if(jname.getText().equals(""))
         {
-            JOptionPane.showMessageDialog(null, "The device must have a name!");
+            JOptionPane.showMessageDialog(rootPane, "The device must have a name!");
             return;
         }
         String str = "\n\t\t\"" + jname.getText() + "\": {\n";
