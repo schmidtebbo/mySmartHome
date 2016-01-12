@@ -7,6 +7,7 @@ package mysmarthome;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,9 +16,12 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -74,7 +78,7 @@ public class Config extends javax.swing.JFrame {
 
     Config(String strAktKonf, JHelp aThis) {
         this.strAktKonfiguration = strAktKonf;
-        int i = 0;
+        int i;
         String s = "";
         if(strAktKonfiguration != null)
         {
@@ -163,6 +167,8 @@ public class Config extends javax.swing.JFrame {
         jSettings = new javax.swing.JButton();
         jCopy = new javax.swing.JButton();
         jAddGUI_Element = new javax.swing.JButton();
+        jRestart = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -309,6 +315,15 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
+        jRestart.setText(bundle.getString("Config.jRestart.text")); // NOI18N
+        jRestart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRestartActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText(bundle.getString("Config.jLabel3.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -330,22 +345,6 @@ public class Config extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jNewDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(jCopy, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(jDelDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jExit, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(jRules, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(jSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(251, 251, 251)
-                                .addComponent(jLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jSave, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,7 +352,31 @@ public class Config extends javax.swing.JFrame {
                                         .addComponent(jLabelGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(296, 296, 296)
-                                .addComponent(jHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jExit, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jRules, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(278, 278, 278))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jNewDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jCopy, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jDelDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jRestart)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jSave, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -383,17 +406,23 @@ public class Config extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jNewDevice)
-                    .addComponent(jCopy)
-                    .addComponent(jDelDevice))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jExit)
-                    .addComponent(jRules)
-                    .addComponent(jSettings)
-                    .addComponent(jLoad)
-                    .addComponent(jSave))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jNewDevice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCopy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDelDevice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jExit)
+                            .addComponent(jRules)
+                            .addComponent(jSettings)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLoad)
+                                .addComponent(jSave))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRestart)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -875,27 +904,9 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jGUIMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileInputStream(gsConfigFilename));
-        } catch (FileNotFoundException ex) {
-            File f = new File(Config.gsConfigDirectory);
-            Boolean b = f.mkdir();
-            f = new File(gsConfigFilename);
-            try {
-                f.createNewFile();
-            } catch (IOException ex1) {
-                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String s = "";
-        prop.getProperty("pilightConf",s + (rootPane.getBounds().x + 10)+";"+(rootPane.getBounds().y + 10));
-        String strBounds[] = s.split(";");
-        Rectangle bounds = this.getBounds();
-        bounds.x = Integer.parseInt(strBounds[0]);
-        bounds.y = Integer.parseInt(strBounds[1]);
+        Rectangle bounds = rootPane.getBounds();
+        bounds.x += 20;
+        bounds.y += 20;
         this.setBounds(bounds);
         if(strAktKonfiguration != null)
         {
@@ -950,7 +961,7 @@ public class Config extends javax.swing.JFrame {
                     break;
                 }
                 str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
-                s = "\n\t\t\"" + str.substring(0, str.indexOf("\"")) + "\": {";
+                String s = "\n\t\t\"" + str.substring(0, str.indexOf("\"")) + "\": {";
                 str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
                 str += tmp[4].substring(tmp[4].indexOf(":") + 1, tmp[4].length()) + "</pre></html>";
                 DevlistenModell.addElement(str);
@@ -1030,7 +1041,7 @@ public class Config extends javax.swing.JFrame {
                     break;
                 }
                 str = tmp[1].substring(tmp[1].indexOf("\"") + 1, tmp[1].length());
-                s = "\n\t\t\"" + str.substring(0, str.indexOf("\"")) + "\": {";
+                String s = "\n\t\t\"" + str.substring(0, str.indexOf("\"")) + "\": {";
                 str = "<html><pre>" + str.substring(0, str.indexOf("\"")) + "\t";
                 str += tmp[3].substring(tmp[3].indexOf(":") + 1, tmp[3].length())+ "\t";
                 str += tmp[4].substring(tmp[4].indexOf(":") + 1, tmp[4].length()) + "</pre></html>";
@@ -1164,6 +1175,130 @@ public class Config extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formComponentResized
 
+    private void jRestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRestartActionPerformed
+        String str1;
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileInputStream(gsConfigFilename));
+        } catch (FileNotFoundException ex) {
+            File f = new File(Config.gsConfigDirectory);
+            Boolean b = f.mkdir();
+            try {
+                f = new File(gsConfigFilename);
+                f.createNewFile();
+                prop.store(new FileOutputStream(Config.gsConfigFilename), Config.gsConfigComment);
+                prop.setProperty("DefDir", System.getProperty("user.name"));
+            } catch (FileNotFoundException ex1) {
+                try {
+                    prop.setProperty("DefDir", System.getProperty("user.name"));
+                    prop.store(new FileOutputStream(Config.gsConfigFilename), Config.gsConfigComment);
+                } catch (IOException ex2) {
+                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex2);
+                }
+            } catch (IOException ex1) {
+                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        str1 = prop.getProperty("DefDir");
+        if(str1 == null)
+            str1 = System.getProperty("user.name");
+        JFileChooser fs = new JFileChooser();
+        File curDir = new File(str1);       
+        fs.setCurrentDirectory(curDir);
+        FileFilter filter = new FileNameExtensionFilter("JSON file", "json");
+        fs.addChoosableFileFilter(filter);
+        fs.setAcceptAllFileFilterUsed(true);
+        int ret = fs.showOpenDialog(this);
+        if(ret == javax.swing.JFileChooser.APPROVE_OPTION)
+        {
+            File f = fs.getSelectedFile();
+            LastSelectedFile = f;
+            cbuf = new char[(int)f.length()];
+            String file_name = f.toString( );
+            try {
+                prop.setProperty("DefDir", file_name);
+                prop.store(new FileOutputStream(Config.gsConfigFilename), Config.gsConfigComment);
+                } catch (IOException ex) {
+                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                String[] args = new String[4];
+                args[0] = "sudo";
+                args[1] = "service";
+                args[2] = "pilight";
+                args[3] = "stop";
+                Process process = new ProcessBuilder(args).start(); //("sudo service pilight stop");
+                InputStream is = process.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+                process.waitFor();
+                String str = "", s;            
+                while((s = br.readLine()) != null)
+                    str += s;
+                Help myHlp = new Help();
+                myHlp.Text = str;
+                args[1] = "cp";
+                args[2] = file_name;
+                args[3] = "/etc/pilight/config.json";
+                process = new ProcessBuilder(args).start(); 
+                is = process.getInputStream();
+                isr = new InputStreamReader(is);
+                br = new BufferedReader(isr);
+                process.waitFor();
+                myHlp.AddTextLine("Copying config file...");
+                str = "";
+                while((s = br.readLine()) != null)
+                    str += s;
+                myHlp.AddTextLine(str);
+                args[1] = "service";
+                args[2] = "pilight";
+                args[3] = "start";
+                process = new ProcessBuilder(args).start(); 
+                is = process.getInputStream();
+                isr = new InputStreamReader(is);
+                br = new BufferedReader(isr);
+                process.waitFor();
+                str = "";
+                while((s = br.readLine()) != null)
+                    str += s;
+                myHlp.AddTextLine(str);
+                if(str.contains("failed"))
+                {
+                    myHlp.AddTextLine("\n\ntail /var/log/pilight.err\n");
+                    args[1] = "tail";
+                    args[2] = "/var/log/pilight.err";
+                    args[3] = "";
+                    process = new ProcessBuilder(args).start(); 
+                    is = process.getInputStream();
+                    isr = new InputStreamReader(is);
+                    br = new BufferedReader(isr);
+                    process.waitFor();
+                    str = "";
+                    while((s = br.readLine()) != null)
+                        str += s + "\n";
+                    myHlp.AddTextLine(str);
+                }
+                else
+                {
+                    myHlp.AddTextLine(" OK.\n");
+                    s =java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("restart");
+                    JOptionPane.showMessageDialog(rootPane, s);
+                    System.exit(0);
+                }
+            } catch (IOException ex) {
+                String message = ex.getMessage();
+                JOptionPane.showMessageDialog(rootPane, message);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_jRestartActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1212,9 +1347,11 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JButton jHelp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelGUI;
     private javax.swing.JButton jLoad;
     private javax.swing.JButton jNewDevice;
+    private javax.swing.JButton jRestart;
     private javax.swing.JButton jRules;
     private javax.swing.JButton jSave;
     private javax.swing.JScrollPane jScrollPane1;

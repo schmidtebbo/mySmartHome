@@ -18,6 +18,9 @@ import javax.swing.ImageIcon;
  */
 public class Help extends javax.swing.JFrame {
 
+    
+    public String Text = null;
+    
     /**
      * Creates new form Help
      */
@@ -89,37 +92,50 @@ public class Help extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jOKActionPerformed
 
+    public void AddTextLine(String str)
+    {
+        Text += "\n" + str;
+        jHelpText.setText(Text);
+    }
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        InputStream is;
-        BufferedReader br;
-        int bytesRead = 0 ;
-        char ac[] = new char[10001];
-        int n;
-        
-        String str = "piconfig.txt";
-        Class c = getClass();
-        is = c.getResourceAsStream (str);
-        if( is != null)
+        if(Text != null)
         {
-            try {
-                br = new BufferedReader(new InputStreamReader(is, "UTF8"));
-                n = br.read(ac, 0, 10000);
-                ac[n+1] = 0;
-                bytesRead += n;
-                br.close();
-                String str1 = new String(ac);
-                jHelpText.setText(str1.substring(0, n));
-                // Cursor ganz oben Positionieren
-                jHelpText.setSelectionStart(0);
-                jHelpText.setSelectionEnd(0);
-            } catch (UnsupportedEncodingException ex) {
-                jHelpText.setText("No help file found");
-            } catch (IOException ex) {
-                jHelpText.setText("No help file found");
-            }
+            jHelpText.setText(Text);
         }
         else
-            jHelpText.setText("No help file found");
+        {
+            InputStream is;
+            BufferedReader br;
+            int bytesRead = 0 ;
+            char ac[] = new char[10001];
+            int n;
+
+            String str = "piconfig.txt";
+            Class c = getClass();
+            is = c.getResourceAsStream (str);
+            if( is != null)
+            {
+                try {
+                    br = new BufferedReader(new InputStreamReader(is, "UTF8"));
+                    n = br.read(ac, 0, 10000);
+                    ac[n+1] = 0;
+                    bytesRead += n;
+                    br.close();
+                    String str1 = new String(ac);
+                    jHelpText.setText(str1.substring(0, n));
+                    // Cursor ganz oben Positionieren
+                    jHelpText.setSelectionStart(0);
+                    jHelpText.setSelectionEnd(0);
+                } catch (UnsupportedEncodingException ex) {
+                    jHelpText.setText("No help file found");
+                } catch (IOException ex) {
+                    jHelpText.setText("No help file found");
+                }
+            }
+            else
+                jHelpText.setText("No help file found");
+        }   
     }//GEN-LAST:event_formWindowOpened
 
     /**
