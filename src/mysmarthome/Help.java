@@ -95,7 +95,8 @@ public class Help extends javax.swing.JFrame {
     public void AddTextLine(String str)
     {
         Text += "\n" + str;
-        jHelpText.setText(Text);
+        jHelpText.append("\n" + str);
+        jHelpText.setCaretPosition(Text.length());
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

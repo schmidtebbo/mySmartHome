@@ -62,6 +62,7 @@ import javax.swing.Timer;
  
 public class myHome extends javax.swing.JFrame {
 
+    public Thread pilightCore ;
     PrintStream printStream = null;
     BufferedReader bufferedReader = null;
     String server = null;
@@ -1740,7 +1741,7 @@ public class myHome extends javax.swing.JFrame {
             });
             timer.start();
             
-            Thread pilightCore = new Thread()
+            pilightCore = new Thread()
             {
                 String strMeldungen = null;
                 public void run() 
