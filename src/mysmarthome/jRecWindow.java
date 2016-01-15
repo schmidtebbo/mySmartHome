@@ -5,8 +5,12 @@
  */
 package mysmarthome;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +20,8 @@ public class jRecWindow extends javax.swing.JFrame {
 
     public String Text = "";
     Config myParent;
+    public boolean Running = false;
+    public ArrayList<String> supress = null;
 
     /**
      * Creates new form jRecWindow
@@ -145,22 +151,76 @@ public class jRecWindow extends javax.swing.JFrame {
 
     public void AddTextLine(String str)
     {
-        Text += "\n" + str;
         jRecOutput.append("\n" + str);
-        jRecOutput.setCaretPosition(Text.length());
+        jRecOutput.setCaretPosition(jRecOutput.getText().length());
     }
 
     private void jOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOKActionPerformed
-        myParent.Running = false;
+        Running = false;
         this.dispose();
     }//GEN-LAST:event_jOKActionPerformed
 
     private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
-        myParent.Running = true;
+        
+        
+        Thread pilightReceive = new Thread()
+        {
+            public void run()
+            {
+                String[] args = new String[2];
+                args[0] = "sudo";
+                args[1] = "pilight-receive";               
+                Running = true;
+                
+            try {
+                    Process process = new ProcessBuilder(args).start(); 
+                    Scanner s = new Scanner( process.getInputStream() ); 
+                    String str = "";
+                    while(Running)
+                    {
+                       while(!s.hasNextLine());
+                       str += s.nextLine() + "\n";
+//                       AddTextLine(str);
+
+                       if(str.contains("}\n"))
+                        {
+                            if(supress != null && !supress.isEmpty())
+                            {
+                                int i;
+                                for(i = 0; i < supress.size(); i++)
+                                {
+                                    if(str.contains(supress.get(i)))
+                                    {
+                                        i = -1;
+                                        break;
+                                    }
+                                }
+
+                                if(i != -1)
+                                {
+                                    AddTextLine(str);
+                                }
+                            }
+                            else
+                            {
+                                AddTextLine(str);
+                            }
+                            str = "";
+                        }
+                    }
+                    s.close();
+                    process.destroy();
+                } catch (IOException ex) {
+                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+                }                
+           }
+        };
+        pilightReceive.start();            
+        Running = true;
     }//GEN-LAST:event_jStartActionPerformed
 
     private void jStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopActionPerformed
-        myParent.Running = false;
+        Running = false;
     }//GEN-LAST:event_jStopActionPerformed
 
     private void jSupressListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSupressListMouseClicked
@@ -170,7 +230,7 @@ public class jRecWindow extends javax.swing.JFrame {
         {
             selectedValuesList.clear();
         }
-        myParent.supress = (ArrayList<String>) selectedValuesList;
+        supress = (ArrayList<String>) selectedValuesList;
     }//GEN-LAST:event_jSupressListMouseClicked
 
     /**
@@ -212,7 +272,7 @@ public class jRecWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jOK;
-    private javax.swing.JTextArea jRecOutput;
+    public javax.swing.JTextArea jRecOutput;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jStart;
