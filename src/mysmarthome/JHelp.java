@@ -125,6 +125,7 @@ public class JHelp extends javax.swing.JFrame {
         
         if(showFile == 0)
         {
+            this.setTitle("Hekp");
             jEdit.setEnabled(false);
             Class c = getClass();
             is = c.getResourceAsStream ("mySmartHome.hlp");
@@ -151,6 +152,10 @@ public class JHelp extends javax.swing.JFrame {
             {
                 jHelpText.setText("mySmartHome.hlp not found.\n");
             }
+        }
+        else
+        {
+            this.setTitle("active configuration");
         }
     Dimension preferredSize = this.getPreferredSize();
     this.setBounds(myParent.getBounds().x + 10, myParent.getBounds().y + 10, preferredSize.width, preferredSize.height);

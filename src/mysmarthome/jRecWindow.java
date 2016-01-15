@@ -5,12 +5,14 @@
  */
 package mysmarthome;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -34,6 +36,15 @@ public class jRecWindow extends javax.swing.JFrame {
         myParent = aThis;
         initComponents();
         this.setVisible(true);
+        ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
+        this.setIconImage(II.getImage());
+        Rectangle bounds = myParent.getBounds();
+        bounds.x += 20;
+        bounds.y += 20;
+        bounds.height = this.getPreferredSize().height;
+        bounds.width = this.getPreferredSize().width;
+        this.setBounds(bounds);
+        this.setTitle("pilight-receive output");
     }
 
     /**
@@ -51,7 +62,6 @@ public class jRecWindow extends javax.swing.JFrame {
         jOK = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jSupressList = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jStart = new javax.swing.JButton();
 
@@ -76,7 +86,7 @@ public class jRecWindow extends javax.swing.JFrame {
         });
 
         jSupressList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "nothing", "datetime", "ping", "arping", "wunderground", "openweathermap", "sunriseset", "dht22", "bmp180", "cpu_temp" };
+            String[] strings = { "nothing", "alecto_ws1700", "arping", "bmp180", "cpu_temp", "datetime", "dht22", "intertechno_old", "intertechno_switch", "kaku_switch", "ping", "openweathermap", "rsl366", "sunriseset", "wunderground" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -86,8 +96,6 @@ public class jRecWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jSupressList);
-
-        jLabel1.setText("pilight-receive output");
 
         jLabel2.setText("Suppress output of protocol");
 
@@ -105,25 +113,19 @@ public class jRecWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(128, 128, 128)
+                            .addComponent(jOK, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(128, 128, 128)
-                                    .addComponent(jOK, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jStop, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                        .addComponent(jStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jStop, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,16 +133,14 @@ public class jRecWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jStart, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jStop, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jStop)
-                            .addComponent(jStart))
-                        .addGap(18, 18, 18)
                         .addComponent(jOK))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
@@ -167,6 +167,10 @@ public class jRecWindow extends javax.swing.JFrame {
         {
             public void run()
             {
+                AddTextLine("starting pilight-receive...\n");
+                AddTextLine("It works only on the same Linux-PC, where the pilight daemon runs!\n");
+                AddTextLine("<control>click for more then one protocol, you don't want to see.\n");
+                AddTextLine("It can be slow, so be patient ;-)\n");
                 String[] args = new String[2];
                 args[0] = "sudo";
                 args[1] = "pilight-receive";               
@@ -180,8 +184,6 @@ public class jRecWindow extends javax.swing.JFrame {
                     {
                        while(!s.hasNextLine());
                        str += s.nextLine() + "\n";
-//                       AddTextLine(str);
-
                        if(str.contains("}\n"))
                         {
                             if(supress != null && !supress.isEmpty())
@@ -221,6 +223,7 @@ public class jRecWindow extends javax.swing.JFrame {
 
     private void jStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopActionPerformed
         Running = false;
+        AddTextLine("\n\npilight-receive stopped.\n");
     }//GEN-LAST:event_jStopActionPerformed
 
     private void jSupressListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSupressListMouseClicked
@@ -269,7 +272,6 @@ public class jRecWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jOK;
     public javax.swing.JTextArea jRecOutput;
