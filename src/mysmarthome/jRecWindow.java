@@ -86,7 +86,7 @@ public class jRecWindow extends javax.swing.JFrame {
         });
 
         jSupressList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "nothing", "alecto_ws1700", "arping", "bmp180", "cpu_temp", "datetime", "dht22", "intertechno_old", "intertechno_switch", "kaku_switch", "ping", "openweathermap", "rsl366", "sunriseset", "wunderground" };
+            String[] strings = { "nothing", "alecto_ws1700", "arping", "bmp180", "brennstuhl", "coco_switch", "cpu_temp", "datetime", "dht11", "dht22", "elro_300_switch", "elro_400_switch", "elro_800_contact", "elro_800_switch", "ev1527", "ev1527_contact", "intertechno_old", "intertechno_switch", "kaku_contact", "kaku_motion", "kaku_switch", "ping", "openweathermap", "rsl366", "sunriseset", "wunderground" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -232,6 +232,7 @@ public class jRecWindow extends javax.swing.JFrame {
         if(selectedIndex == 0)
         {
             selectedValuesList.clear();
+            jSupressList.clearSelection();
         }
         supress = (ArrayList<String>) selectedValuesList;
     }//GEN-LAST:event_jSupressListMouseClicked
