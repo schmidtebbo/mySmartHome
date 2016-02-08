@@ -6,6 +6,8 @@
 package mysmarthome;
 
 import java.awt.Component;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,6 +28,7 @@ class Devices {
     static String  gsConfigDirectory = System.getProperty("user.home") + "/mySmartHome/";
 
     private boolean bLaunch = true;
+    private boolean bLaunchPress = true;
     
     private String strName = null;
     private String strProtokoll = null;
@@ -37,10 +40,14 @@ class Devices {
     public int nHumidity[] = new int[100];
     private float HumOffset = 0;
     public byte nTemperature[] = new byte[100];
+    public byte nMinTemperature[] = new byte[100];
     private byte maxTemp = -127;
+    private byte minTemp = 127;
     public boolean bMustAddTemp = false;
     private float TempOffset = 0;
     public int nAirPressure[] = new int[100];
+    private float PressureOffset = 0;
+    private int maxPress = 950;
     private int nDay = 0;
 
     private String strHumidity = null;
@@ -84,7 +91,7 @@ class Devices {
         this.strName = ss;
     }
     
-    public void addTemp(byte newTemp)
+    public void addTemp(byte newTemp, byte newMinTemp)
     {
         try {
             try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp")) {
@@ -95,6 +102,14 @@ class Devices {
                 }
                 nTemperature[99] = newTemp;
                 stream.write(nTemperature[99]);
+                for(int i = 0; i < 99; i++)
+                {
+                    nMinTemperature[i] = nMinTemperature[i+1];
+                    stream.write(nMinTemperature[i]);
+                }
+                nMinTemperature[99] = newTemp;
+                stream.write(nMinTemperature[99]);
+                stream.close();
             }
         } catch (FileNotFoundException ex) {
             File f = new File(myHome.gsConfigDirectory + strName + ".temp");
@@ -103,8 +118,47 @@ class Devices {
                 try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp")) {
                     for(int i = 0; i < 100; i++)
                     {
-                        stream.write(0);
+                        stream.write(-90);
                     }
+                    for(int i = 0; i < 100; i++)
+                    {
+                        stream.write(90);
+                    }
+                    stream.close();
+                }
+            } catch (IOException ex1) {
+                Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addPressure(byte newPress)
+    {
+        try {
+            try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".pressure")) {
+                DataOutputStream dout = new DataOutputStream(stream);
+                for(int i = 0; i < 99; i++)
+                {
+                    nAirPressure[i] = nAirPressure[i+1];   
+                    dout.writeInt(nAirPressure[i]);
+                }
+                nAirPressure[99] = newPress;
+                dout.writeInt(nAirPressure[99]);
+                dout.close();
+            }
+        } catch (FileNotFoundException ex) {
+            File f = new File(myHome.gsConfigDirectory + strName + ".pressure");
+            try {
+                f.createNewFile();
+                try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".pressure")) {
+                    DataOutputStream dout = new DataOutputStream(stream);
+                    for(int i = 0; i < 100; i++)
+                    {
+                        dout.writeInt(950);
+                    }
+                    dout.close();
                 }
             } catch (IOException ex1) {
                 Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
@@ -172,13 +226,16 @@ class Devices {
             i = Integer.parseInt(strTemperature.substring(0, i));
             if(i > maxTemp)
                 maxTemp = (byte)i;
+            if(i < minTemp)
+                minTemp = (byte)i;
         
             if(bLaunch)
             {
                 bLaunch = false;
                 try {
                     try (FileInputStream stream = new FileInputStream(myHome.gsConfigDirectory + strName + ".temp")) {
-                        stream.read(nTemperature);   
+                        stream.read(nTemperature);  
+                        stream.close();
                     }
                 } catch (FileNotFoundException ex) {
                     File fT = new File(myHome.gsConfigDirectory + strName + ".temp");
@@ -187,8 +244,13 @@ class Devices {
                         try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp")) {
                             for(i = 0; i < 100; i++)
                             {
-                                stream.write(0);
+                                stream.write(-90);
                             }
+                            for(i = 0; i < 100; i++)
+                            {
+                                stream.write(90);
+                            }
+                            stream.close();
                             bMustAddTemp = true;
                         }
                     } catch (IOException ex1) {
@@ -206,6 +268,22 @@ class Devices {
                     try {
                         FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
                         stream.write(nTemperature);
+                        stream.write(nMinTemperature);
+                        stream.close();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(nMinTemperature[99] > minTemp)
+                {
+                    nMinTemperature[99] = minTemp;
+                    try {
+                        FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".temp");
+                        stream.write(nTemperature);
+                        stream.write(nMinTemperature);
+                        stream.close();
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {
@@ -224,6 +302,65 @@ class Devices {
     public void setAirPressure(String a)
     {
         strAirPressure = a;
+        if(a != null)
+        {
+            float f = Float.parseFloat(a);
+            f += PressureOffset;
+            strAirPressure = String.valueOf(f);
+            int i = strAirPressure.indexOf('.');
+            i = Integer.parseInt(strAirPressure.substring(0, i));
+            if(i > maxPress)
+                maxPress = i;
+        
+            if(bLaunchPress)
+            {
+                bLaunchPress = false;
+                try {
+                    try (FileInputStream stream = new FileInputStream(myHome.gsConfigDirectory + strName + ".pressure")) {
+                        DataInputStream din = new DataInputStream(stream);
+                        for(i = 0; i < 100; i++)
+                            nAirPressure[i] = din.readInt(); 
+                        din.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    File fT = new File(myHome.gsConfigDirectory + strName + ".pressure");
+                    try {
+                        fT.createNewFile();
+                        try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".pressure")) {
+                            DataOutputStream dout = new DataOutputStream(stream);
+                            for(i = 0; i < 100; i++)
+                            {
+                                dout.writeInt(950);
+                            }
+                            bMustAddTemp = true;
+                            dout.close();
+                        }
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {
+                if(nAirPressure[99] < maxPress)
+                {
+                    nAirPressure[99] = maxPress;
+                    try {
+                        FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".pressure");
+                        DataOutputStream dout = new DataOutputStream(stream);
+                        for(i = 0; i < 100; i++)
+                            dout.writeInt(nAirPressure[i]);
+                        dout.close();
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Devices.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
     }
     
     public String getSunrise()
@@ -565,6 +702,24 @@ class Devices {
             }
         } catch (NumberFormatException numberFormatException) {
             HumOffset = 0;
+        }
+    }
+
+    byte getMinTemperature() {
+        return minTemp;
+    }
+
+    void setPressureOffset(String offset) {
+        try {
+            PressureOffset = Float.parseFloat(offset);
+            if(strAirPressure != null)
+            {
+                float f = Float.parseFloat(strAirPressure);
+                f += PressureOffset;
+                strAirPressure = String.valueOf(f);
+            }
+        } catch (NumberFormatException numberFormatException) {
+            PressureOffset = 0;
         }
     }
 

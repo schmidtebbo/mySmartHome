@@ -497,6 +497,7 @@ public class Config extends javax.swing.JFrame {
         }
         DeviceList.remove(selectedIndex);
         DevlistenModell.remove(selectedIndex+1);
+        JOptionPane.showMessageDialog(rootPane, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("checkRules"));
     }//GEN-LAST:event_jDelDeviceActionPerformed
 
     private void jNewDeviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNewDeviceActionPerformed
@@ -562,7 +563,7 @@ public class Config extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(rootPane, "File has the wrong extension!");
+                JOptionPane.showMessageDialog(rootPane, java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("wrongExtension"));
             }
         }
     }//GEN-LAST:event_jNewDeviceActionPerformed
@@ -1255,13 +1256,16 @@ public class Config extends javax.swing.JFrame {
                 args[2] = "pilight";
                 args[3] = "stop";
                 Process process = new ProcessBuilder(args).start(); //("sudo service pilight stop");
-                InputStream is = process.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+                InputStream is ;
+                InputStreamReader isr ;
+                BufferedReader br;
+//                InputStream is = process.getInputStream();
+//                InputStreamReader isr = new InputStreamReader(is);
+//                BufferedReader br = new BufferedReader(isr);
                 process.waitFor();
                 String str = "", s;            
-                while((s = br.readLine()) != null)
-                    str += s;
+//                while((s = br.readLine()) != null)
+  //                  str += s;
                 Help myHlp = new Help();
                 myHlp.Text = str;
                 args[1] = "cp";

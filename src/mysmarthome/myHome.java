@@ -625,6 +625,15 @@ public class myHome extends javax.swing.JFrame {
                                 }
                                 if(s.contains("\"pressure\":"))
                                 {
+                                    if(s.contains("\"pressure-offset\":"))
+                                    {
+                                        nLauf = s.indexOf("\"pressure-offset\":");
+                                        String str = s.substring(nLauf + 18, s.length());
+                                        nLauf = str.indexOf(".") + 2;
+                                        if(nLauf == 0)
+                                            nLauf++;
+                                        dev.setPressureOffset(str.substring(0, nLauf));
+                                    }
                                     nLauf = s.indexOf("\"pressure\":");
                                     String str = s.substring(nLauf + 11, s.length());
                                     nLauf = str.indexOf(",\"");
@@ -911,6 +920,7 @@ public class myHome extends javax.swing.JFrame {
                                                         public void actionPerformed(ActionEvent e) {
                                                             Statistik statistik = new Statistik();
                                                             statistik.iVal = d.nTemperature;
+                                                            statistik.iMinVal = d.nMinTemperature;
                                                             statistik.parentTemp = d.getGUIName();
                                                             statistik.setVisible(true);
                                                         }
@@ -920,6 +930,15 @@ public class myHome extends javax.swing.JFrame {
                                                 {
                                                     bnAirPress.setIcon(d.getIconPressure());
                                                     bnAirPress.setText(d.getAirPressure() + "hPa");
+                                                    bnAirPress.addActionListener(new java.awt.event.ActionListener() {
+
+                                                        @Override
+                                                        public void actionPerformed(ActionEvent e) {
+                                                            pressureStatistik statistik = new pressureStatistik();
+                                                            statistik.iVal = d.nAirPressure;
+                                                            statistik.setVisible(true);
+                                                        }
+                                                    });
                                                 }
                                                 if(d.getSunrise() != null)
                                                 {
@@ -1871,13 +1890,15 @@ public class myHome extends javax.swing.JFrame {
                                                         if(nDay != dev.getnDay())
                                                         {
                                                             byte n = dev.getMaxTemperature();
-                                                            dev.addTemp(n);
+                                                            byte m = dev.getMinTemperature();
+                                                            dev.addTemp(n, m);
                                                             dev.setnday(nDay);
                                                         }
                                                         if(dev.bMustAddTemp)
                                                         {
                                                             byte n = dev.getMaxTemperature();
-                                                            dev.addTemp(n);
+                                                            byte m = dev.getMinTemperature();
+                                                            dev.addTemp(n, m);
                                                             dev.setnday(nDay);
                                                             dev.bMustAddTemp = false;
                                                         }

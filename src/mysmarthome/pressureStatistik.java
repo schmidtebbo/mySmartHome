@@ -13,20 +13,17 @@ import javax.swing.ImageIcon;
  *
  * @author ktams
  */
-public class Statistik extends javax.swing.JFrame {
+public class pressureStatistik extends javax.swing.JFrame {
 
-    public byte[] iVal = null;
-    public byte[] iMinVal = null;
-    public String parentTemp = "";
+    public int[] iVal = null;
     String strToday;
     String str100days;
-    boolean bShowTemp = false;
+    boolean bShowPressure = false;
     int MouseX, MouseY;
-    
     /**
-     * Creates new form Statistik
+     * Creates new form pressureStatistik
      */
-    public Statistik() {
+    public pressureStatistik() {
         ImageIcon II = new ImageIcon(getClass().getResource("pictures/Home.jpg"));
         this.setIconImage(II.getImage());
         initComponents();
@@ -40,50 +37,56 @@ public class Statistik extends javax.swing.JFrame {
     public void paint(Graphics g)
     {
         super.paint(g);
-        g.drawLine(50, 50, 50, 330);
-        g.drawLine(50, 330, 850, 330);
+        g.drawLine(60, 50, 60, 330);
+        g.drawLine(60, 330, 860, 330);
         for( int i = 1; i < 100; i++)
         {
             if((i%20) == 0)
             {
                 g.setColor(Color.LIGHT_GRAY);
-                g.drawLine(50 + 8*i, 325, 50 + 8*i, 50);
+                g.drawLine(60 + 8*i, 325, 60 + 8*i, 50);
                 g.setColor(Color.black);
-                g.drawString(""+i, 42 + 8*i, 350);
+                g.drawString(""+i, 52 + 8*i, 350);
             }
-            g.drawLine(50 + 8*i, 325, 50 + 8*i, 335);
+            g.drawLine(60 + 8*i, 325, 60 + 8*i, 335);
         }
-        g.drawString(strToday, 820, 350);
-        g.drawString(str100days, 10, 350);
+        g.drawString(strToday, 830, 350);
+        g.drawString(str100days, 20, 350);
         for( int i = 0; i < 70; i += 5)
         {
             if((i%10) == 0)
             {
                 g.setColor(Color.LIGHT_GRAY);
-                g.drawLine(45, 50 + i*4, 850, 50 + i*4);
+                g.drawLine(55, 50 + i*4, 850, 50 + i*4);
                 g.setColor(Color.black);
             }
-            g.drawLine(45, 50 + i*4, 55, 50 + i*4);
+            g.drawLine(55, 50 + i*4, 65, 50 + i*4);
         }
         g.setColor(Color.LIGHT_GRAY);
-        g.drawLine(50, 250, 850, 250);
+        g.drawLine(60, 250, 860, 250);
         g.setColor(Color.black);
-        g.drawString("0°C", 20, 255);
-        g.drawString("-10°C", 10, 295);
-        g.drawString("10°C", 15, 215);
-        g.drawString("20°C", 15, 175);
-        g.drawString("30°C", 15, 135);
-        g.drawString("40°C", 15, 95);
+        g.drawString("970hP", 10, 295);
+        g.drawString("990hP", 10, 255);
+        g.drawString("1010hP", 5, 215);
+        g.drawString("1030hP", 5, 175);
+        g.drawString("1050hP", 5, 135);
+        g.drawString("1070hP", 5, 95);
         
         if(iVal != null)
         {
-            int xMax = -100, yMax = -100;
-            int xMin = 100, yMin = 100;
+            int xMax = 900, yMax = 900;
+            int xMin = 1100, yMin = 1100;
             
             for(int i = 0; i < iVal.length-1; i++)
             {
-                g.setColor(Color.red);
-                int x1 = iVal[iVal.length - 1 -i];
+                int x1 = iVal[iVal.length - 1 - i];
+                if(x1 == 0)
+                    x1 = 950;
+                if(x1 < xMin)
+                {
+                    xMin = x1;
+                    yMin = i;
+                }
                 if(x1 > xMax)
                 {
                     xMax = x1;
@@ -91,35 +94,24 @@ public class Statistik extends javax.swing.JFrame {
                 }
                 int x2 = iVal[iVal.length - 2 - i];
                 
-                g.drawLine(850 - i*8, 250 - x1*4, 850 - (i+1)*8, 250 - x2*4);
-
-                g.setColor(Color.blue);
-            
-                x1 = iMinVal[iMinVal.length - 1 -i];
-                if(x1 < xMin)
-                {
-                    xMin = x1;
-                    yMin = i;
-                }
-                x2 = iMinVal[iMinVal.length - 2 - i];
-                
-                g.drawLine(850 - i*8, 250 - x1*4, 850 - (i+1)*8, 250 - x2*4);
-            
+                g.drawLine(860 - i*8, 330 - (x1 - 950)*2, 860 - (i+1)*8, 330 - (x2 - 950)*2);
             }
-            g.drawLine(850 - yMin*8, 250 - xMin*4, 850 - yMin*8, 240 - xMin*4);
-            g.drawString(""+xMin, 840 - yMin*8, 238 - xMin*4);
+            g.setColor(Color.red);
+            g.drawLine(860 - yMin*8, 330 - (xMin - 950)*2, 860 - yMin*8, 320 - (xMin - 950)*2);
+            g.drawString(""+xMin, 850 - yMin*8, 318 - (xMin - 950)*2);
             g.setColor(Color.green);
-            g.drawLine(850 - yMax*8, 250 - xMax*4, 850 - yMax*8, 240 - xMax*4);
-            g.drawString(""+xMax, 840 - yMax*8, 238 - xMax*4);
+            g.drawLine(860 - yMax*8, 330 - (xMax - 950)*2, 860 - yMax*8, 320 - (xMax - 950)*2);
+            g.drawString(""+xMax, 850 - yMax*8, 318 - (xMax - 950)*2);
             g.setColor(Color.black);
-            if(bShowTemp)
+            if(bShowPressure)
             {
-                int x = (MouseX - 50)/8;
+                int x = (MouseX - 60)/8;
                 if(x >= 0 && x < 100)
                     g.drawString(""+iVal[x], MouseX, MouseY);
             }
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,11 +132,6 @@ public class Statistik extends javax.swing.JFrame {
                 formMouseClicked(evt);
             }
         });
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -155,7 +142,7 @@ public class Statistik extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 855, Short.MAX_VALUE)
+            .addGap(0, 870, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,16 +154,12 @@ public class Statistik extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setTitle("Temperature statistics: " + parentTemp);
+        this.setTitle(java.util.ResourceBundle.getBundle("mysmarthome/Bundle").getString("pressStat"));
     }//GEN-LAST:event_formWindowOpened
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formComponentShown
-
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        bShowTemp = !bShowTemp;
-        if(bShowTemp)
+        bShowPressure = !bShowPressure;
+        if(bShowPressure)
         {
             MouseX = evt.getX();
             MouseY = evt.getY();
@@ -185,7 +168,7 @@ public class Statistik extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseClicked
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        if(bShowTemp)
+        if(bShowPressure)
         {
             MouseX = evt.getX();
             MouseY = evt.getY();
@@ -210,20 +193,20 @@ public class Statistik extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Statistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pressureStatistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Statistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pressureStatistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Statistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pressureStatistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Statistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pressureStatistik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Statistik().setVisible(true);
+                new pressureStatistik().setVisible(true);
             }
         });
     }
