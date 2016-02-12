@@ -49,6 +49,7 @@ class Devices {
     private float PressureOffset = 0;
     private int maxPress = 950;
     private int nDay = 0;
+    public boolean bIsNewDay = false;
 
     private String strHumidity = null;
     private String strTemperature = null;
@@ -134,7 +135,7 @@ class Devices {
         }
     }
     
-    public void addPressure(byte newPress)
+    public void addPressure(int newPress)
     {
         try {
             try (FileOutputStream stream = new FileOutputStream(myHome.gsConfigDirectory + strName + ".pressure")) {

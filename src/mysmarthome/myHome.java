@@ -1859,9 +1859,9 @@ public class myHome extends javax.swing.JFrame {
                                                break;
                                                
                                            case 3:
-                                               if(bDev)
-                                                   break;
-                                               bDev = true;
+                                                if(bDev)
+                                                    break;
+                                                bDev = true;
                                                 JButton bn;
                                                 if(strMeldungen.contains("\"humidity\":"))
                                                 {
@@ -1893,6 +1893,7 @@ public class myHome extends javax.swing.JFrame {
                                                             byte m = dev.getMinTemperature();
                                                             dev.addTemp(n, m);
                                                             dev.setnday(nDay);
+                                                            dev.bIsNewDay = true;
                                                         }
                                                         if(dev.bMustAddTemp)
                                                         {
@@ -1914,7 +1915,15 @@ public class myHome extends javax.swing.JFrame {
                                                     dev.setAirPressure(str.substring(0,nLauf));
                                                     bn = (JButton)dev.getAction().get(2);
                                                     if(bn != null)
+                                                    {
                                                         bn.setText(dev.getAirPressure() + "hPa");
+                                                        if(dev.bIsNewDay)
+                                                        {
+                                                            int n = Integer.parseInt(dev.getAirPressure());
+                                                            dev.addPressure(n);
+                                                            dev.bIsNewDay = false;
+                                                        }
+                                                    }
                                                 }
                                                 if(strMeldungen.contains("\"sunrise\":"))
                                                 {
